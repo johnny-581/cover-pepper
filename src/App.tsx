@@ -1,13 +1,12 @@
 import { useState } from 'react';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI, Type } from '@google/genai';
+import coverLetterTemplate from './assets/cover_letter_template.tex?raw';
 
 function App() {
   const [inputText, setInputText] = useState("");
   const [latexContent, setLatexContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const API_KEY = import.meta.env.VITE_GEMINI_API_KEY
 
   const handleGenerateFile = async () => {
     if (!inputText.trim()) {
@@ -20,27 +19,51 @@ function App() {
     setLatexContent("");
 
     try {
-      const templateResponse = await fetch('./assets/cover_letter_template.tex');
-      if (!templateResponse.ok) {
-        throw new Error("Failed to load latex template")
-      }
-      const templateContent = await templateResponse.text();
-
-      const genAI = new GoogleGenerativeAI(API_KEY);
-      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-pro' });
+      const ai = new GoogleGenAI({ apiKey: import.meta.env.VITE_GEMINI_API_KEY });
 
       const prompt = `
-        From the following input text, extract the details below and return them as a clean JSON object.
+        From the following job description text, extract the details below and return them as a clean JSON object. Use null if the detail does not exist.
         - "company_name": The name of the company.
-        - "company_address": The physical address (e.g., "City, State"). If not present, use an empty string.
+        - "company_address": The physical address spanning one or two lines, in this format: "25 King Street West \\ Toronto, ON, M5L 1A2"
         - "role_title": The full title of the job role.
-        - "hiring_manager_name": The hiring manager's name if specified. If not, default to "Hiring Manager".
+        - "hiring_manager_name": The hiring manager's name.
 
         Input text:
         ---
         ${inputText}
         ---
       `;
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-2.5-pro',
+        contents: prompt,
+        config: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: Type.OBJECT,
+            properties: {
+              "company_name": { type: Type.STRING },
+              "company_address": { type: Type.STRING },
+              "role_title": { type: Type.STRING },
+              "hiring_manager_name": { type: Type.STRING },
+            }
+          }
+        }
+      });
+
+      console.log(response.text);
+
+      const extractedInfo = JSON.parse(response.text!)
+
+      const updatedCoverLetter = coverLetterTemplate
+        .replace(/\[Company\]/g, extractedInfo.company_name || "[Company]")
+        .replace(/\[Address\]/g, extractedInfo.company_address || "[Address]")
+        .replace(/\[Role Title\]/g, extractedInfo.role_title || "[Role Title]")
+        .replace(/\[Hiring Manager\]/g, extractedInfo.hiring_manager_name || 'Hiring Manager');
+
+      setLatexContent(updatedCoverLetter);
+
+      console.log(updatedCoverLetter);
 
 
     } catch (err) {
@@ -59,6 +82,8 @@ function App() {
   return (
     <div>
       <textarea
+        rows={20}
+        cols={150}
         placeholder=""
         value={inputText}
         onChange={(e) => setInputText(e.target.value)}

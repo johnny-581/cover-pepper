@@ -51,9 +51,9 @@ function App() {
             const prompt = `
         From the following job description text, extract the details below and return them as a clean JSON object.
         - "company_name": The name of the company.
-        - "company_address": The physical address (e.g., "City, State"). If not present, use an empty string.
+        - "company_address": The physical address spanning one or two lines, in this format: "25 King Street West \\ Toronto, ON, M5L 1A2"
         - "role_title": The full title of the job role.
-        - "hiring_manager_name": The hiring manager's name if specified. If not, default to "Hiring Manager".
+        - "hiring_manager_name": The hiring manager's name.
 
         Job Description:
         ---
@@ -69,10 +69,10 @@ function App() {
 
             // 3. Replace placeholders in the template
             const updatedContent = templateContent
-                .replace(/Ledcor Corporation/g, details.company_name || "Company Name")
-                .replace(/Vancouver, BC, Canada/g, details.company_address || "Company Address")
-                .replace(/Quality Analyst 169781/g, details.role_title || "Role Title")
-                .replace(/Dear Hiring Manager,/g, `Dear ${details.hiring_manager_name || 'Hiring Manager'},`);
+                .replace(/\[Company\]/g, details.company_name || "[Company]")
+                .replace(/\[Address\]/g, details.company_address || "[Address]")
+                .replace(/\[Role Title\]/g, details.role_title || "[Role Title]")
+                .replace(/\[Hiring Manager\]/g, details.hiring_manager_name || 'Hiring Manager');
 
             setLatexContent(updatedContent);
 
@@ -134,3 +134,19 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+// From the following job description text, extract the details below and return them as a clean JSON object. Use null if the detail does not exist.
+//         - "company_name": The name of the company.
+//         - "company_address": The physical address spanning one or two lines, in this format: "25 King Street West \\ Toronto, ON, M5L 1A2"
+//         - "role_title": The full title of the job role.
+//         - "hiring_manager_name": The hiring manager's name.
+
+//         Input text:
+//         ---
+//         ${inputText}
+//         ---
