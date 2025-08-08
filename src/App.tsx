@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import { GoogleGenAI, Type } from '@google/genai';
 import coverLetterTemplate from './assets/cover_letter_template.tex?raw';
+import { calculateAreaLambdaApi } from './services/lambda_api.ts';
 
 function App() {
   const [inputText, setInputText] = useState("");
   const [latexContent, setLatexContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [area, setArea] = useState(null);
 
   const handleGenerateFile = async () => {
     if (!inputText.trim()) {
@@ -77,7 +79,20 @@ function App() {
     if (!latexContent) return;
 
     // const blob = new Blob([latexContent])
-  }
+  };
+
+  const getArea = async () => {
+    try {
+      const data = await calculateAreaLambdaApi(12, 223);
+      const area = JSON.parse(data.body).area
+      setArea(area);
+
+      console.log(data);
+      console.log(data.body);
+    } catch (apiError) {
+      setError(`api error: ${apiError}`)
+    }
+  };
 
   return (
     <div>
@@ -101,6 +116,9 @@ function App() {
       </div>
 
       {error && <p>Error: {error}</p>}
+
+      <button onClick={getArea}>Get Area</button>
+      {area && <p>Area: {area}</p>}
     </div>
   )
 }

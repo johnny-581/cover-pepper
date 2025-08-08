@@ -1,152 +1,113 @@
-import { useState } from 'react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import axios from 'axios';
 
-// --- Type Definition for Extracted Data ---
-// Using TypeScript-style comments for clarity
+// Create an Axios instance with the base URL from our environment variables.
+const apiClient = axios.create({
+    baseURL: import.meta.env.VITE_API_BASE_URL
+});
+
 /**
- * @typedef {object} JobDetails
- * @property {string} company_name
- * @property {string} company_address
- * @property {string} role_title
- * @property {string} hiring_manager_name
+ * Calls the /calculateArea endpoint of our API.
+ * @param {number} length - The length value.
+ * @param {number} width - The width value.
+ * @returns {Promise<object>} The response data from the API (e.g., { area: 50 }).
  */
+export const calculateAreaOnApi = async (length, width) => {
+    try {
+        // Make a POST request to the /calculateArea path.
+        // Axios automatically stringifies the object we pass as the second argument.
+        const response = await apiClient.post('/calculateArea', {
+            length: length,
+            width: width
+        });
 
-function App() {
-    const [jobDescription, setJobDescription] = useState("");
-    const [latexContent, setLatexContent] = useState("");
+        // Return the data part of the response
+        return response.data;
+    } catch (error) {
+        // Log the error and re-throw it so the component can handle it.
+        console.error("Error calling calculateArea API:", error);
+        throw error;
+    }
+};
+
+
+
+
+import React, { useState } from 'react';
+import { calculateAreaOnApi } from './services/api'; // Adjust path if needed
+
+function AreaCalculator() {
+    const [length, setLength] = useState('');
+    const [width, setWidth] = useState('');
+    const [result, setResult] = useState(null);
+    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
 
-    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+    const handleSubmit = async (event) => {
+        event.preventDefault(); // Prevent form from reloading the page
 
-    /**
-     * Main function to generate the .tex file content
-     */
-    const handleGenerateFile = async () => {
-        if (!jobDescription.trim()) {
-            setError("Please enter a job description.");
-            return;
-        }
-        if (!apiKey) {
-            setError("API key is not configured. Please check your .env.local file.");
-            return;
-        }
-
+        // Reset state for new submission
         setIsLoading(true);
-        setError("");
-        setLatexContent("");
+        setError('');
+        setResult(null);
 
         try {
-            // 1. Fetch the LaTeX template from the public folder
-            const templateResponse = await fetch('/cover_letter_template.tex');
-            if (!templateResponse.ok) {
-                throw new Error("Failed to load LaTeX template. Make sure it's in the /public folder.");
-            }
-            const templateContent = await templateResponse.text();
-
-            // 2. Call Gemini API to extract details from the job description text
-            const genAI = new GoogleGenerativeAI(apiKey);
-            const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-
-            const prompt = `
-        From the following job description text, extract the details below and return them as a clean JSON object.
-        - "company_name": The name of the company.
-        - "company_address": The physical address spanning one or two lines, in this format: "25 King Street West \\ Toronto, ON, M5L 1A2"
-        - "role_title": The full title of the job role.
-        - "hiring_manager_name": The hiring manager's name.
-
-        Job Description:
-        ---
-        ${jobDescription}
-        ---
-      `;
-
-            const result = await model.generateContent(prompt);
-            const responseText = result.response.text().replace(/```json|```/g, "").trim();
-
-            /** @type {JobDetails} */
-            const details = JSON.parse(responseText);
-
-            // 3. Replace placeholders in the template
-            const updatedContent = templateContent
-                .replace(/\[Company\]/g, details.company_name || "[Company]")
-                .replace(/\[Address\]/g, details.company_address || "[Address]")
-                .replace(/\[Role Title\]/g, details.role_title || "[Role Title]")
-                .replace(/\[Hiring Manager\]/g, details.hiring_manager_name || 'Hiring Manager');
-
-            setLatexContent(updatedContent);
-
-        } catch (err) {
-            console.error(err);
-            setError(err instanceof Error ? err.message : "An unknown error occurred.");
+            // Call our API service function
+            const data = await calculateAreaOnApi(Number(length), Number(width));
+            setResult(data.area);
+        } catch (apiError) {
+            setError('Failed to calculate area. Please check the values and try again.');
         } finally {
+            // Ensure loading is set to false whether it succeeded or failed
             setIsLoading(false);
         }
     };
 
-    /**
-     * Triggers the download of the generated .tex file
-     */
-    const handleDownloadTex = () => {
-        if (!latexContent) return;
-
-        const blob = new Blob([latexContent], { type: 'application/x-latex' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'cover_letter.tex';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    };
-
     return (
         <div>
-            <h3>Automated Cover Letter Generator</h3>
-
-            {/* Text Box for Job Description */}
-            <textarea
-                rows="10"
-                cols="80"
-                placeholder="Paste the full job description here..."
-                value={jobDescription}
-                onChange={(e) => setJobDescription(e.target.value)}
-                disabled={isLoading}
-            />
-
-            <div>
-                {/* Generate File Button */}
-                <button onClick={handleGenerateFile} disabled={isLoading}>
-                    {isLoading ? 'Generating...' : 'Generate File'}
+            <h2>AWS Lambda Area Calculator</h2>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>
+                        Length:
+                        <input
+                            type="number"
+                            value={length}
+                            onChange={(e) => setLength(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <div>
+                    <label>
+                        Width:
+                        <input
+                            type="number"
+                            value={width}
+                            onChange={(e) => setWidth(e.target.value)}
+                            required
+                        />
+                    </label>
+                </div>
+                <button type="submit" disabled={isLoading}>
+                    {isLoading ? 'Calculating...' : 'Calculate Area'}
                 </button>
+            </form>
 
-                {/* Download .tex Button */}
-                <button onClick={handleDownloadTex} disabled={!latexContent || isLoading}>
-                    Download .tex
-                </button>
-            </div>
+            {/* Show the result if it exists */}
+            {result !== null && (
+                <div style={{ marginTop: '20px' }}>
+                    <h3>Resulting Area: {result}</h3>
+                </div>
+            )}
 
-            {/* Display Errors if any */}
-            {error && <p style={{ color: 'red' }}>Error: {error}</p>}
+            {/* Show an error message if something went wrong */}
+            {error && (
+                <div style={{ marginTop: '20px', color: 'red' }}>
+                    <p>Error: {error}</p>
+                </div>
+            )}
         </div>
     );
 }
 
-export default App;
-
-
-
-
-
-
-// From the following job description text, extract the details below and return them as a clean JSON object. Use null if the detail does not exist.
-//         - "company_name": The name of the company.
-//         - "company_address": The physical address spanning one or two lines, in this format: "25 King Street West \\ Toronto, ON, M5L 1A2"
-//         - "role_title": The full title of the job role.
-//         - "hiring_manager_name": The hiring manager's name.
-
-//         Input text:
-//         ---
-//         ${inputText}
-//         ---
+export default AreaCalculator;
