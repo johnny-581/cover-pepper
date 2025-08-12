@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import coverLetterTemplate from './assets/cover_letter_template.tex?raw';
-import { type ReplacementField, extractReplacementFields } from './services/gemini.ts'
+import { type Field, extractFields, replaceFields } from './services/gemini.ts'
+import { parseForCoverLetterBody } from './utils/parse-latex.ts'
 
 function App() {
   const [jobDiscriptionText, setJobDiscriptionText] = useState("");
   const [letterBodyText, setLetterBodyText] = useState("");
-  const [replacementFields, setReplacementFields] = useState<ReplacementField[]>([]);
+  const [fields, setFields] = useState<Field[]>([]);
   const [message, setMassamge] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleAnalyze = async () => {
     if (!jobDiscriptionText.trim()) {
@@ -15,29 +15,36 @@ function App() {
       return;
     }
 
-    setIsLoading(true);
-    setMassamge("Analyzing...");
-
     try {
-      const replacementFields = await extractReplacementFields(jobDiscriptionText, coverLetterTemplate)
-      setReplacementFields(replacementFields);
+      setMassamge("Analyzing...");
+      const fields = await extractFields(jobDiscriptionText, coverLetterTemplate)
+      setFields(fields);
     } catch (error) {
       console.error("Error analyzing: ", { error });
       throw error;
     } finally {
-      setIsLoading(false);
       setMassamge("");
     }
   };
 
   const handleFieldChange = (index: number, newValue: string) => {
-    const updatedFields = [...replacementFields];
+    const updatedFields = [...fields];
     updatedFields[index].fieldValue = newValue;
-    setReplacementFields(updatedFields);
+    setFields(updatedFields);
   }
 
   const handleReplace = async () => {
-
+    try {
+      setMassamge("Replacing...");
+      const templateCoverLetterBody = parseForCoverLetterBody(coverLetterTemplate)
+      const replacedCoverLetterBody = await replaceFields(fields, templateCoverLetterBody)
+      setLetterBodyText(replacedCoverLetterBody)
+    } catch (error) {
+      console.error("Error replacing: ", { error });
+      throw error;
+    } finally {
+      setMassamge("");
+    }
   }
 
   // saves the body paragraphs of the current cover letter as a .txt file
@@ -59,15 +66,14 @@ function App() {
         placeholder=""
         value={jobDiscriptionText}
         onChange={(e) => setJobDiscriptionText(e.target.value)}
-        disabled={isLoading}
       />
-      <button onClick={handleAnalyze} disabled={isLoading}>
-        {isLoading ? 'Analyzing...' : 'Analyze'}
+      <button onClick={handleAnalyze}>
+        Analyze
       </button>
 
       <p>Fields To Replace:</p>
       <ul>
-        {replacementFields.map((field, index) => (
+        {fields.map((field, index) => (
           <li key={index}>
             {field.fieldName}:{" "}
             <input
@@ -78,7 +84,7 @@ function App() {
           </li>
         ))}
       </ul>
-      <button onClick={handleReplace} disabled={isLoading}>
+      <button onClick={handleReplace}>
         Replace
       </button>
 
@@ -88,12 +94,11 @@ function App() {
         placeholder=""
         value={letterBodyText}
         onChange={(e) => setLetterBodyText(e.target.value)}
-        disabled={isLoading}
       />
-      <button onClick={handleSave} disabled={isLoading}>
+      <button onClick={handleSave}>
         Save
       </button>
-      <button onClick={handleDownloaPDF} disabled={isLoading}>
+      <button onClick={handleDownloaPDF}>
         Download
       </button>
 
