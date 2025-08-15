@@ -1,0 +1,36 @@
+import { Router } from "express";
+import passport from "passport";
+
+const router = Router();
+
+// entry point to google auth
+router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
+
+router.get(
+    "/google/callback",
+    passport.authenticate("google", { failureRedirect: "/auth/failure" }),
+    (req, res) => {
+        // on success
+        res.redirect(process.env.CLIENT_ORIGIN || "/");
+    }
+);
+
+router.get("/failure", (req, res) => {
+    res.status(401).json({ error: "Google authentication failed!" });
+});
+
+router.post("/lougout", (req, res, next) => {
+    req.logout(err => {
+        if (err) return next(err);
+        req.session?.destroy(() => {
+            res.clearCookies("connect.sid");
+            res.status(200).json({ ok: true });
+        });
+    });
+});
+
+router.get("/me", (req, res) => {
+    res.json({ user: req.user || null });
+});
+
+export default router;
