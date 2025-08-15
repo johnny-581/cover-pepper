@@ -11,7 +11,7 @@ router.get(
     passport.authenticate("google", { failureRedirect: "/auth/failure" }),
     (req, res) => {
         // on success
-        res.redirect(process.env.CLIENT_ORIGIN || "/");
+        res.redirect(process.env.CLIENT_ORIGIN);
     }
 );
 
@@ -19,13 +19,11 @@ router.get("/failure", (req, res) => {
     res.status(401).json({ error: "Google authentication failed!" });
 });
 
-router.post("/lougout", (req, res, next) => {
+router.post("/logout", (req, res, next) => {
     req.logout(err => {
         if (err) return next(err);
-        req.session?.destroy(() => {
-            res.clearCookies("connect.sid");
-            res.status(200).json({ ok: true });
-        });
+        res.clearCookie("connect.sid");
+        res.status(200).json({ message: "Logout sucessful!" });
     });
 });
 

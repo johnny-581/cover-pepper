@@ -6,7 +6,7 @@ const apiClient = axios.create({
 
 export const latexCompilerLambdaApi = async (latex_source: string) => {
     try {
-        const response = await apiClient.post('/latexCompiler', {
+        const response = await apiClient.post('/latex-compiler', {
             latex_source: latex_source
         });
 

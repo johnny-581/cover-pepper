@@ -1,0 +1,13 @@
+I am building a web app that organizes cover letters. There is a directory panel on the left with a list of cover letters, and an edit panel on the right. The cover letters are in latex, but there is a toggle button that allows editing in both latex an plain text formats.
+The project will have the following functionalities:
+add, delete, and group cover letters into folders
+Edit cover letters as both latex and a plain text representation
+generate a new cover letter from a template given a job description (with gemini api)
+compiling and downloading as pdf (with another api)
+login with google and data presistence
+a settings page
+I will use vite-react for the frontend and express.js for the backend. What other tools and frameworks should I use? What will be the general structure of my project and location for each functionality?
+
+
+
+I want the files to be saved primarily as latex, but the user should be able to edit a plain text representation. This plain text representation could possibly just include the portion from "Dear Hiring Manager" to "Sincerely, Johnny" of the cover letter, which includes minimal latex formatting that's easier to parse. I want to maybe provide bold and italic formatting option for the plain text and that's it. How should I represent the cover letters in the frontend and backend, and what are the best tools to use. How should I handle conversion between latex and plain text?

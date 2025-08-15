@@ -10,7 +10,7 @@ import { errorHandler } from "./middleware/errorHandler.js";
 
 const app = express();
 
-app.use(morgan("dev")); // change to "combined in production"
+app.use(morgan("dev")); // change to "combined" in production
 
 app.use(express.json({ limit: "2mb" }))
 app.use(
@@ -31,7 +31,7 @@ app.use(
             httpOnly: true,
             sameSite: "lax",
             secure: ENV.NODE_ENV === "production",
-            maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
+            maxAge: 1000 * 60 * 60 * 24 * 7,
         },
     })
 );
