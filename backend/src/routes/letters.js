@@ -106,14 +106,15 @@ router.delete("/:id", async (req, res, next) => {
 // generate a letter from a job description and another letter as template
 router.post("/generate", async (req, res, next) => {
     try {
+        // console.log(`Request to backend:\n ${JSON.stringify(req.body)}`);
         const userId = req.user.id;
         const { jobDescription, templateLatex } = req.body;
 
         if (!jobDescription || !templateLatex)
             return res.status(400).json({ error: "Missing jobDescription or template!" });
 
-        const generatedLatex = await generateCoverLetterLatex({ jobDescription, templateLatex });
-        const generatedMeta = await generateCoverLetterMeta({ generatedLatex });
+        const generatedLatex = await generateCoverLetterLatex(jobDescription, templateLatex);
+        const generatedMeta = await generateCoverLetterMeta(generatedLatex);
         const { title, company, position, date } = generatedMeta;
 
         const created = await prisma.coverLetter.create({
@@ -139,7 +140,7 @@ router.post("/:id/compile", async (req, res, next) => {
         const { id } = req.params;
 
         const letter = await prisma.coverLetter.findFirst({ where: { id, userId } });
-        if (!letter) return res.status(404).json({ error: "Not found" });
+        if (!letter) return res.status(404).json({ error: "Letter not in database when trying to compile!" });
 
         const pdfBuffer = await compileLatexToPdf(letter.contentLatex);
 
