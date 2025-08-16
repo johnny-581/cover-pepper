@@ -64,7 +64,7 @@ export async function generateCoverLetterMeta(coverLetter) {
         `;
 
         const response = await ai.models.generateContent({
-            model: 'gemini-2.5-Lite',
+            model: 'gemini-2.5-flash',
             contents: prompt,
             config: {
                 responseMimeType: "application/json",
@@ -79,6 +79,8 @@ export async function generateCoverLetterMeta(coverLetter) {
                 },
             },
         });
+
+        console.log(`HERE!!!!!\n ${response}`);
 
         return JSON.parse(response.text);
     } catch (error) {

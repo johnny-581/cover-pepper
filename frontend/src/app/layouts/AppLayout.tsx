@@ -1,11 +1,11 @@
 import { Outlet } from "react-router-dom";
 import Header from "@/components/Header";
 import DirectoryPanel from "@/features/letters/components/DirectoryPanel";
-// import { useUI } from "@/features/letters/store";
-// import SettingsDialog from "@/features/settings/SettingsDialog";
+import { useUI } from "@/features/letters/store";
+import SettingsDialog from "@/features/settings/SettingsDialog";
 
 export default function AppLayout() {
-    // const { isSettingsOpen, setSettingsOpen } = useUI();
+    const { isSettingsOpen, setSettingsOpen } = useUI();
 
     return (
         <div className="h-screen w-screen flex flex-col">
@@ -16,7 +16,7 @@ export default function AppLayout() {
                     <Outlet />
                 </div>
             </div>
-            {/* <SettingsDialog open={isSettingsOpen} onClose={() => setSettingsOpen(false)} /> */}
+            <SettingsDialog open={isSettingsOpen} onClose={() => setSettingsOpen(false)} />
         </div>
     );
 }

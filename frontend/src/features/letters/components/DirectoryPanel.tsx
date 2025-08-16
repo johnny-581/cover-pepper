@@ -15,7 +15,7 @@ export default function DirectoryPanel() {
             <div className="p-3 border-b border-grayline">
                 <div className="flex gap-2">
                     <Button fullWidth onClick={() => setGenerateOpen(true)}>
-                        New letter
+                        New Letter
                     </Button>
                 </div>
             </div>
@@ -34,7 +34,7 @@ export default function DirectoryPanel() {
                     <Settings size={16} />
                 </Button>
                 <div className="text-xs text-right flex-1 px-2 truncate">
-                    {user?.name ?? user?.email ?? "Account"}
+                    {user?.name}
                 </div>
                 <Button
                     title="Account"

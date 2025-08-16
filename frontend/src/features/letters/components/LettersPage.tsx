@@ -2,7 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useLetter, useLetters } from "@/features/letters/hooks";
 // import EditorPanel from "@/features/letters/components/EditorPanel";
-// import GenerateDialog from "@/features/letters/components/dialogs/GenerateDialog";
+import GenerateDialog from "@/features/letters/components/dialogs/GenerateDialog";
 import { useUI } from "@/features/letters/store";
 
 export default function LettersPage() {
@@ -10,7 +10,7 @@ export default function LettersPage() {
     const navigate = useNavigate();
     const { data: letters } = useLetters();
     // const { data: letter } = useLetter(id);
-    // const { isGenerateOpen, setGenerateOpen } = useUI();
+    const { isGenerateOpen, setGenerateOpen } = useUI();
 
     useEffect(() => {
         if (!id && letters && letters.length > 0) {
@@ -29,7 +29,7 @@ export default function LettersPage() {
                 <div></div>
             )}
 
-            {/* <GenerateDialog open={isGenerateOpen} onClose={() => setGenerateOpen(false)} /> */}
+            <GenerateDialog open={isGenerateOpen} onClose={() => setGenerateOpen(false)} />
         </>
     );
 }
