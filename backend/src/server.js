@@ -2,7 +2,7 @@ import express from 'express';
 import session from "express-session";
 import cors from "cors";
 import morgan from "morgan";
-import passport from 'passport';
+import passport from './config/passport.js';
 import { ENV } from './config/env.js';
 import authRoutes from "./routes/auth.js";
 import letterRoutes from "./routes/letters.js";

@@ -1,6 +1,6 @@
 import passport from 'passport';
-import { Strategy as GoogleStrategy, Profile } from 'passport-google-oauth20';
-import prisma from './prisma';
+import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
+import prisma from './prisma.js';
 import { ENV } from './env.js';
 
 passport.serializeUser((user, done) => {
@@ -17,6 +17,7 @@ passport.deserializeUser(async (id, done) => {
     }
 });
 
+console.log("[passport] registering google strategy...");
 passport.use(
     new GoogleStrategy(
         {
@@ -26,7 +27,7 @@ passport.use(
         },
         async (_accessToken, _refreshToken, profile, done) => {
             try {
-                const email = profile.email?.[0]?.value;
+                const email = profile.emails?.[0]?.value;
                 if (!email) return done(new Error("Google account has no email"));
 
                 let user = await prisma.user.findUnique({ where: { googleId: profile.id } });

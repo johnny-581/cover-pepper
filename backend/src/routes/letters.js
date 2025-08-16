@@ -18,6 +18,7 @@ router.get("/", async (req, res, next) => {
         });
         res.json(letters);
     } catch (err) {
+        console.log("ERROR!!!!!!!!!!!!!!!!")
         next(err);
     }
 });

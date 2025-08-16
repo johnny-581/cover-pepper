@@ -12,6 +12,9 @@ Frontend:
 - vite-react with typescript
 - tailwind
 - monaco-editor for LaTeX editing
+- TanStack Query
+- Zustand
+- Lucide for icons
 
 Backend:
 - express
@@ -210,15 +213,19 @@ router.get("/me", (req, res) => {
 ```
 
 # Implement frontend prompt
-Provide a full implementation for the frontend. Use very minimal, mostly back and white styling.
+Provide a full implementation for the frontend. Keep the styling to the minimum, using mostly back and white.
 
-Use these frameworks and tools: vite-react, tailwind, 
+Use: vite-react with typescript, tailwind, monaco, TanStack Query, Zustand, and other appropriate tools
 
+Do not include "choose template" option in the generate dialog.
+Put the account and settings icons at the bottom of the directory panel insdead.
+
+Name each file and take you time
 
 
 
 # Full Version
-I am building a online cover letter organizer and editor. There will be a directory panel on the left with a list of cover letters, and an edit panel on the right. The cover letters are in latex, but there is a toggle button that allows editing in both latex an plain text formats.
+I am building an online cover letter organizer and editor. There will be a directory panel on the left with a list of cover letters, and an edit panel on the right. The cover letters are in latex, but there is a toggle button that allows editing in both latex an plain text formats.
 
 The project will have the following functionalities:
 - add, delete, and group cover letters into folders
@@ -261,3 +268,6 @@ Implement a validation library like express-validator or zod to sanitize and val
 Your routes that modify data (/upload, /:id (PUT), /:id (DELETE), /generate, /logout) are potentially vulnerable to CSRF attacks. A malicious website could make a request to these endpoints from a user's browser without their consent.
 Recommendation:
 Implement CSRF protection. A common method is to use a library like csurf to generate and validate CSRF tokens for state-changing requests.
+
+
+- marked + DOMPurify for compiling markdown
