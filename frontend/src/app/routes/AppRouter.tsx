@@ -1,8 +1,8 @@
 import { Route, Routes, Navigate } from "react-router-dom";
 import AppLayout from "@/app/layouts/AppLayout";
 import { useAuth } from "@/features/auth/useAuth";
-import LettersPage from "@/features/letters/components/LettersPage";
-import LoginPage from "@/features/auth/LoginPage";
+import LoginPage from "@/features/auth/LoginDialog";
+import EditorPanel from "@/features/editor/components/EditorPanel";
 
 export default function AppRouter() {
     const { isLoading, user } = useAuth();
@@ -19,7 +19,7 @@ export default function AppRouter() {
             ) : (
                 <>
                     <Route element={<AppLayout />}>
-                        <Route path="/app/letters/:id?" element={<LettersPage />} />
+                        <Route path="/app/letters/:id?" element={<EditorPanel />} />
                     </Route>
                     <Route path="*" element={<Navigate to="/app/letters" replace />} />
                 </>

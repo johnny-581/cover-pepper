@@ -1,1 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+@theme {
+    --color-theme-primary: #F5E1B8;
+    --color-theme-secondary: #F7F3E8;
+    --color-almost-white: #FAFAF9;
+    --color-almost-black: #404040;
+    --color-gray: #AFAFAF;
+
+    --font-serif: "Merriweather", serif;
+    --font-sans: "Work Sans", sans;
+}
+
 @import "tailwindcss";

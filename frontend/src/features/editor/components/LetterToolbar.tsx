@@ -49,7 +49,7 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
     };
 
     return (
-        <div className="h-12 border-b border-grayline flex items-center justify-between px-3">
+        <div className="h-12 flex items-center justify-between px-3">
             <input
                 className="text-base font-medium outline-none bg-transparent"
                 value={title}

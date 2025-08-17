@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import type { Letter } from "@/features/letters/types";
-import ContextMenu from "@/features/letters/components/ContextMenu";
+import ContextMenu from "@/components/ContextMenu";
 import { useDeleteMutation, useLetters } from "@/features/letters/hooks";
 import { useUI } from "@/features/letters/store";
 import clsx from "clsx";

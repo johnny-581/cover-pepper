@@ -36,7 +36,7 @@ export default function ContextMenu({
                     {items.map((it, i) => (
                         <li key={i}>
                             <button
-                                className="px-3 py-1 text-left w-full hover:bg-gray-100 disabled:opacity-50"
+                                className="px-3 py-1 text-left w-full bg-white hover:bg-gray-100 disabled:opacity-50"
                                 onClick={() => {
                                     if (!it.disabled) it.onClick();
                                     setOpen(false);

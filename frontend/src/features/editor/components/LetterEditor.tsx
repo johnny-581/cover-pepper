@@ -43,7 +43,7 @@ export default function LetterEditor({ letter }: { letter: Letter }) {
                     root: [
                         [/%.*/, "comment"],
                         [/\\[a-zA-Z]+/, "keyword"],
-                        [/[{}\[\]\(\)]/, "@brackets"],
+                        [/[{}[\]()]/, "@brackets"],
                         [/\$[^$]*\$/, "string"]
                     ]
                 }
