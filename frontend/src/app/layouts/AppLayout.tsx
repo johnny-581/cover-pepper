@@ -10,7 +10,7 @@ export default function AppLayout() {
     const { isSettingsOpen, isGenerateOpen, setSettingsOpen, setGenerateOpen } = useUI();
 
     return (
-        <div className="h-screen w-screen flex flex-col font-serif text-almost-black tracking-wide">
+        <div className="h-screen w-screen flex flex-col font-serif text-almost-black text-[16px] tracking-wide">
             <Header />
             <div className="flex-1 p-2 pt-0 min-h-0">
                 <ThemeContainer className="flex">

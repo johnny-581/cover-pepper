@@ -4,6 +4,7 @@ import ContextMenu from "@/components/ContextMenu";
 import { useDeleteMutation, useLetters } from "@/features/letters/hooks";
 import { useUI } from "@/features/letters/store";
 import clsx from "clsx";
+import { Divide } from "lucide-react";
 
 export default function LetterListItem({ letter }: { letter: Letter }) {
     const navigate = useNavigate();
@@ -34,18 +35,20 @@ export default function LetterListItem({ letter }: { letter: Letter }) {
         <ContextMenu items={items}>
             <li
                 className={clsx(
-                    "px-3 py-2 border-b border-grayline cursor-pointer flex items-center justify-between",
-                    selected && "bg-gray-100"
+                    "px-3 py-3 cursor-pointer flex items-center justify-between rounded-2xl",
+                    selected && "bg-theme-secondary"
                 )}
                 onClick={() => navigate(`/app/letters/${letter.id}`)}
             >
                 <div className="truncate">
-                    <div className="text-sm">{letter.title}</div>
-                    <div className="text-[11px] text-gray-600 truncate">
-                        {letter.company} · {letter.position}
-                    </div>
+                    {letter.title}
                 </div>
-                {templateLetterId === letter.id && <span title="Template">★</span>}
+
+                {templateLetterId === letter.id &&
+                    <div className="px-2 bg-theme-primary font-sans rounded-lg">
+                        Template
+                    </div>
+                }
             </li>
         </ContextMenu>
     );

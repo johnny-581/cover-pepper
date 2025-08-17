@@ -11,12 +11,10 @@ export default function DirectoryPanel() {
 
     return (
         <aside className="w-[280px] border-r-[1.5px] border-gray flex flex-col">
-            <div className="p-3 border-b border-grayline">
-                <div className="flex gap-2">
-                    <Button fullWidth onClick={() => setGenerateOpen(true)}>
-                        New Letter
-                    </Button>
-                </div>
+            <div className="p-5">
+                <Button fullWidth onClick={() => setGenerateOpen(true)}>
+                    New Letter
+                </Button>
             </div>
 
             <div className="flex-1 min-h-0 overflow-auto">

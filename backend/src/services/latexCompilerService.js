@@ -13,7 +13,7 @@ export async function compileLatexToPdf(latexSource) {
 
     const base64 = response.data.body;
 
-    console.log(`\nCompiled PDF:\n ${JSON.stringify(response)}`);
+    // console.log(`\nCompiled PDF:\n ${JSON.stringify(response)}`);
 
     return Buffer.from(base64, "base64");
 }

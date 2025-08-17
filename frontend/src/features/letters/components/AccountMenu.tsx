@@ -5,12 +5,12 @@ import { useAuth } from "@/features/auth/useAuth";
 import ThemeContainer from "@/components/ThemeContainer";
 
 export default function AccountMenu() {
-    const { user, logout } = useAuth();
+    const { user } = useAuth();
     const { setSettingsOpen } = useUI();
 
     return (
         <div className="p-2 items-center justify-between">
-            <ThemeContainer className="flex p-2 items-center">
+            <ThemeContainer className="flex px-2 py-3 items-center">
                 <div className="w-10 h-10 border-[1.5px] border-gray rounded-full">
                     {/* <User size={16} /> */}
                 </div>
@@ -20,12 +20,12 @@ export default function AccountMenu() {
                 </div>
 
                 <Button
+                    colored={false}
+                    square={true}
                     title="Settings"
-                    variant="ghost"
-                    square
                     onClick={() => setSettingsOpen(true)}
                 >
-                    <Settings size={16} />
+                    <Settings size={20} color="var(--color-almost-black)" />
                 </Button>
             </ThemeContainer>
         </div>
