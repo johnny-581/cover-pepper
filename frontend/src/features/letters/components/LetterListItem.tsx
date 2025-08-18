@@ -34,8 +34,8 @@ export default function LetterListItem({ letter }: { letter: Letter }) {
         <ContextMenu items={items}>
             <li
                 className={clsx(
-                    "px-3 py-3 cursor-pointer flex items-center justify-between rounded-xl",
-                    selected && "bg-theme-secondary shadow-[0px_0px_4px_0px_rgba(0,0,0,0.1)]"
+                    "px-3 py-[10px] cursor-pointer flex items-center justify-between rounded-lg",
+                    selected && "bg-theme-secondary"
                 )}
                 onClick={() => navigate(`/app/letters/${letter.id}`)}
             >

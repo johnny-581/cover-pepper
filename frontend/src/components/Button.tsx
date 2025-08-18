@@ -2,33 +2,26 @@ import clsx from "clsx";
 import type { ButtonHTMLAttributes } from "react";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
-    colored?: boolean;
-    fullWidth?: boolean;
-    square?: boolean; // ignores size and uses uniform padding
+    variant?: "primary" | "secondary" | "ghost"
 };
 
 export default function Button({
-    colored = true,
-    fullWidth = false,
-    square = false,
+    variant = "primary",
+    className,
     ...rest
 }: Props) {
-    // const base = "inline-flex items-center justify-center transition disabled:opacity-60";
-    // const variants = {
-    //     outline: "border-black bg-transparent text-black hover:bg-gray-100 active:bg-gray-200",
-    //     solid: "border-black bg-black text-white hover:opacity-90 active:opacity-80"
-    // };
+    const height = "h-9"
+    const base = "inline-flex items-center justify-center px-4 min-w-20 rounded-lg whitespace-nowrap transition shadow-[0px_0px_4px_0px_rgba(0,0,0,0.1)]"
 
-    const height = "10"
-
-    const base = "flex items-center justify-center rounded-xl transition hover:theme-border"
-    const width = fullWidth ? "w-full" : square ? "" : "px-4";
-    const isSquare = square ? `w-${height}` : ""
-    const bg = colored ? "bg-theme-primary" : "bg-transparent";
+    const variants = {
+        primary: "bg-theme-primary hover:bg-[#EEDBB5]",
+        secondary: "bg-theme-secondary",
+        ghost: "bg-transparent hover:bg-[#f5f5f4]",
+    }
 
     return (
         <button
-            className={clsx(base, `h-${height}`, bg, isSquare, width)}
+            className={clsx(base, height, variants[variant], className)}
             {...rest}
         />
     );

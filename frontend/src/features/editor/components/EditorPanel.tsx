@@ -1,7 +1,7 @@
 import EditorToolbar from "@/features/editor/components/EditorToolbar";
-import Editor from "@/features/editor/components/Editor";
+import MonacoEditor from "@/features/editor/components/MonacoEditor";
 import { useNavigate, useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLetter, useLetters } from "@/features/letters/hooks";
 import NoLetterSelected from "./NoLetterSelected";
 import ThemeContainer from "@/components/ThemeContainer";
@@ -12,6 +12,7 @@ export default function EditorPanel() {
     const navigate = useNavigate();
     const { data: letters } = useLetters();
     const { data: letter } = useLetter(id);
+    const scrollRef = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         if (!id && letters && letters.length > 0) {
@@ -28,10 +29,10 @@ export default function EditorPanel() {
                     <EditorToolbar letter={letter} />
 
                     {/* scrollable area */}
-                    <div className="flex-1 min-h-0 p-5 pb-20 overflow-auto">
+                    <div ref={scrollRef} className="flex-1 min-h-0 p-5 pb-20 overflow-auto">
                         <div className="flex overflow-visible">
-                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px] inset-shadow-sm/10 bg-almost-white" autoHeightAndWdith={true}>
-                                <Editor letter={letter} />
+                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px] bg-almost-white shadow-[inset_0px_0px_6px_0px_rgba(0,0,0,0.1)]" autoHeightAndWdith={true}>
+                                <MonacoEditor letter={letter} scrollContainerRef={scrollRef} />
                             </ThemeContainer>
                         </div>
                     </div>

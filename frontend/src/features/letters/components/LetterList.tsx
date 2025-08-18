@@ -12,7 +12,7 @@ export default function LetterList({ letters }: { letters: Letter[] }) {
     }
 
     return (
-        <ul className="p-2">
+        <ul className="px-2">
             {letters.map((l) => (
                 <LetterListItem key={l.id} letter={l} />
             ))}
