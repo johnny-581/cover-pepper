@@ -19,7 +19,7 @@ export default function EditorPanel() {
         }
     }, [id, letters, navigate])
 
-    if (!letter) return <div className="p-4">Loading letter…</div>;
+    if (!letter) return <div className="h-full w-full bg-theme-secondary flex items-center justify-center">Loading letter…</div>;
 
     return (
         <>
@@ -30,7 +30,7 @@ export default function EditorPanel() {
                     {/* scrollable area */}
                     <div className="flex-1 min-h-0 p-5 pb-20 overflow-auto">
                         <div className="flex overflow-visible">
-                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px]" autoHeightAndWdith={true}>
+                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px] inset-shadow-sm/10 bg-almost-white" autoHeightAndWdith={true}>
                                 <Editor letter={letter} />
                             </ThemeContainer>
                         </div>

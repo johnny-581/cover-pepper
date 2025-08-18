@@ -58,16 +58,24 @@ export default function LetterEditor({ letter }: { letter: Letter }) {
             base: "vs", // vs-dark
             inherit: true,
             rules: [
-                { token: "comment", foreground: "6A9955" }, // % comment
+                { token: "comment", foreground: "6A9955" },  // % comment
                 { token: "keyword", foreground: "D3AA57" },   // \command
-                { token: "string", foreground: "D16969" },                       // $...$
-                { token: "brackets", foreground: "007ACC" },                     // { } [ ] ( )
+                { token: "string", foreground: "D16969" },    // $...$
+                { token: "brackets", foreground: "007ACC" },  // { } [ ] ( )
+                { token: "", foreground: cssVar("--color-almost-black") } // plain text
             ],
             colors: {
-                "editor.background": "#FAFAFA",   // editor bg
-                "editorGutter.background": cssVar("--color-almost-white"),
+                "editor.background": "#00000000",   // editor bg
+                "editorGutter.background": "#00000000",
                 "editorCursor.foreground": cssVar("--color-almost-black"),
                 "editor.selectionBackground": cssVar("--color-theme-secondary"),
+                // blue border
+                "editor.focusedBorder": "#00000000",
+                "editorWidget.border": "#00000000",
+                "focusBorder": "#00000000",
+                // hide line numbers
+                "editorLineNumber.foreground": "#00000000",
+                "editorLineNumber.activeForeground": "#00000000",
             },
         });
         monaco.editor.setTheme("coverPepperLatex");
@@ -106,7 +114,17 @@ export default function LetterEditor({ letter }: { letter: Letter }) {
                 onMount={onMount}
                 options={{
                     fontSize: 14,
-                    lineNumbers: "off",
+                    // selectable left edge
+                    lineNumbers: "on",
+                    selectOnLineNumbers: true,
+                    glyphMargin: false,
+                    folding: false,
+                    lineDecorationsWidth: 0,
+                    lineNumbersMinChars: 3,
+                    cursorSurroundingLines: 0,
+                    // remove indent guides
+                    guides: { indentation: false },
+                    //
                     minimap: { enabled: false },
                     wordWrap: "on",
                     scrollBeyondLastLine: false,
