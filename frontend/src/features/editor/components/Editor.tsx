@@ -39,19 +39,38 @@ export default function LetterEditor({ letter }: { letter: Letter }) {
     };
 
     const onMount: OnMount = (editor, monaco) => {
-        if (!monaco.languages.getLanguages().some((l) => l.id === "latex")) {
-            monaco.languages.register({ id: "latex" });
-            monaco.languages.setMonarchTokensProvider("latex", {
-                tokenizer: {
-                    root: [
-                        [/%.*/, "comment"],
-                        [/\\[a-zA-Z]+/, "keyword"],
-                        [/[{}[\]()]/, "@brackets"],
-                        [/\$[^$]*\$/, "string"]
-                    ]
-                }
-            });
-        }
+        monaco.languages.register({ id: "latex" });
+        monaco.languages.setMonarchTokensProvider("latex", {
+            tokenizer: {
+                root: [
+                    [/((?:^|[^\\])(?:\\\\)*)(%.*$)/, "comment"],
+                    [/\\[a-zA-Z]+/, "keyword"],
+                    [/[{}[\]()]/, "@brackets"],
+                    [/\$[^$]*\$/, "string"]
+                ]
+            }
+        });
+
+        const cssVar = (name: string) =>
+            getComputedStyle(document.documentElement).getPropertyValue(name)
+
+        monaco.editor.defineTheme("coverPepperLatex", {
+            base: "vs", // vs-dark
+            inherit: true,
+            rules: [
+                { token: "comment", foreground: "6A9955" }, // % comment
+                { token: "keyword", foreground: "D3AA57" },   // \command
+                { token: "string", foreground: "D16969" },                       // $...$
+                { token: "brackets", foreground: "007ACC" },                     // { } [ ] ( )
+            ],
+            colors: {
+                "editor.background": "#FAFAFA",   // editor bg
+                "editorGutter.background": cssVar("--color-almost-white"),
+                "editorCursor.foreground": cssVar("--color-almost-black"),
+                "editor.selectionBackground": cssVar("--color-theme-secondary"),
+            },
+        });
+        monaco.editor.setTheme("coverPepperLatex");
 
         // listens and sets content height
         const updateHeight = () => setHeight(editor.getContentHeight());
@@ -81,7 +100,7 @@ export default function LetterEditor({ letter }: { letter: Letter }) {
             <Editor
                 height="100%"
                 language="latex"
-                theme="vs"
+                theme="coverPepperLatex"
                 value={value}
                 onChange={onChange}
                 onMount={onMount}
@@ -91,7 +110,7 @@ export default function LetterEditor({ letter }: { letter: Letter }) {
                     minimap: { enabled: false },
                     wordWrap: "on",
                     scrollBeyondLastLine: false,
-                    padding: { top: 16, bottom: 16 },
+                    padding: { top: 24, bottom: 24 },
                     automaticLayout: true,
                     scrollbar: {
                         vertical: "hidden",

@@ -50,15 +50,15 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
     return (
         <div className="flex items-center justify-between px-5">
             <input
-                className="text-base text-[32px] outline-none bg-transparent"
+                className="flex-1 pr-5 text-base text-[32px] outline-none bg-transparent"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />
             <div className="flex items-center gap-4 py-5">
-                <div className="fontsans">
+                {/* <div className="fontsans">
                     {saving === "saving" && "Saving…"}
                     {saving === "saved" && "Saved"}
-                </div>
+                </div> */}
                 <Button onClick={handleCompile} disabled={compile.isPending}>
                     {compile.isPending ? "Compiling…" : "Finish (PDF)"}
                 </Button>

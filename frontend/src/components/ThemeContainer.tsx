@@ -1,15 +1,15 @@
 import type { ReactNode } from "react";
 
 type Props = {
-    autoHeight?: boolean,
+    autoHeightAndWdith?: boolean,
     className?: string,
     children: ReactNode
 }
 
-export default function ThemeContainer({ autoHeight = false, className, children }: Props) {
-    const height = autoHeight ? "" : "h-full"
+export default function ThemeContainer({ autoHeightAndWdith = false, className, children }: Props) {
+    const height = autoHeightAndWdith ? "" : "h-full w-full"
     return (
-        <div className={`${height} w-full min-h-0 rounded-2xl theme-border overflow-hidden ${className}`}>
+        <div className={`${height} min-h-0 rounded-2xl theme-border overflow-hidden ${className}`}>
             {children}
         </div>
     )

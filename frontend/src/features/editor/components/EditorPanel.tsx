@@ -1,4 +1,4 @@
-import LetterToolbar from "@/features/editor/components/LetterToolbar";
+import EditorToolbar from "@/features/editor/components/EditorToolbar";
 import Editor from "@/features/editor/components/Editor";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
@@ -24,13 +24,16 @@ export default function EditorPanel() {
     return (
         <>
             {id ? (
-                <div className="h-full w-full flex flex-col">
-                    <LetterToolbar letter={letter} />
+                <div className="h-full w-full bg-theme-secondary flex flex-col">
+                    <EditorToolbar letter={letter} />
 
+                    {/* scrollable area */}
                     <div className="flex-1 min-h-0 p-5 pb-20 overflow-auto">
-                        <ThemeContainer className="min-h-3/4" autoHeight={true}>
-                            <Editor letter={letter} />
-                        </ThemeContainer>
+                        <div className="flex overflow-visible">
+                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px]" autoHeightAndWdith={true}>
+                                <Editor letter={letter} />
+                            </ThemeContainer>
+                        </div>
                     </div>
                 </div>
             ) : (

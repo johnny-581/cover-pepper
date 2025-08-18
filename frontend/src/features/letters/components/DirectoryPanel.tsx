@@ -10,7 +10,7 @@ export default function DirectoryPanel() {
 
 
     return (
-        <aside className="w-[280px] border-r-[1.5px] border-gray flex flex-col">
+        <aside className="w-[280px] border-r-[1.5px] border-gray bg-almost-white flex flex-col">
             <div className="p-5">
                 <Button fullWidth onClick={() => setGenerateOpen(true)}>
                     New Letter
