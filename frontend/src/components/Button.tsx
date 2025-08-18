@@ -1,16 +1,19 @@
 import clsx from "clsx";
-import type { ButtonHTMLAttributes } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { Button } from "./ui/button";
 
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
     colored?: boolean;
     fullWidth?: boolean;
     square?: boolean; // ignores size and uses uniform padding
+    children: ReactNode;
 };
 
-export default function Button({
+export default function ThemeButton({
     colored = true,
     fullWidth = false,
     square = false,
+    children,
     ...rest
 }: Props) {
     // const base = "inline-flex items-center justify-center transition disabled:opacity-60";
@@ -30,6 +33,8 @@ export default function Button({
         <button
             className={clsx(base, `h-${height}`, bg, isSquare, width)}
             {...rest}
-        />
+        >
+            {children}
+        </button>
     );
 }
