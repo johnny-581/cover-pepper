@@ -10,6 +10,13 @@
 
     --font-serif: "Merriweather", serif;
     --font-sans: "Work Sans", sans;
+
+    --border-width: 1.5;
+}
+
+.theme-border {
+    border-width: 1.5px;
+    border-color: var(--color-gray)
 }
 
 @import "tailwindcss";

@@ -34,7 +34,6 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
             setSaving("saved");
             setTimeout(() => setSaving("idle"), 800);
         }, 500);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [title]);
 
     const handleCompile = async () => {
@@ -49,14 +48,14 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
     };
 
     return (
-        <div className="h-12 flex items-center justify-between px-3">
+        <div className="flex items-center justify-between px-5">
             <input
-                className="text-base font-medium outline-none bg-transparent"
+                className="text-base text-[32px] outline-none bg-transparent"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />
-            <div className="flex items-center gap-3">
-                <div className="text-xs text-gray-600">
+            <div className="flex items-center gap-4 py-5">
+                <div className="fontsans">
                     {saving === "saving" && "Saving…"}
                     {saving === "saved" && "Saved"}
                 </div>

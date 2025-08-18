@@ -11,7 +11,7 @@ export default function AccountMenu() {
     return (
         <div className="p-2 items-center justify-between">
             <ThemeContainer className="flex px-2 py-3 items-center">
-                <div className="w-10 h-10 border-[1.5px] border-gray rounded-full">
+                <div className="w-10 h-10 theme-border rounded-full">
                     {/* <User size={16} /> */}
                 </div>
 

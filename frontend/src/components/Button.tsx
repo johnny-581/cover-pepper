@@ -21,7 +21,7 @@ export default function Button({
 
     const height = "10"
 
-    const base = "flex items-center justify-center border-[1.5px] border-gray rounded-xl transition"
+    const base = "flex items-center justify-center theme-border rounded-xl transition"
     const width = fullWidth ? "w-full" : square ? "" : "px-4";
     const isSquare = square ? `w-${height}` : ""
     const bg = colored ? "bg-theme-primary" : "bg-transparent";

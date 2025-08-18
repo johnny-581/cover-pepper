@@ -5,7 +5,7 @@ export default function LetterList({ letters }: { letters: Letter[] }) {
     if (!letters?.length) {
         // empty pantry
         return (
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-center">
                 Your Pantry is Empty
             </div>
         );
