@@ -1,5 +1,5 @@
 import { Route, Routes, Navigate } from "react-router-dom";
-import AppLayout from "@/app/layouts/AppLayout";
+import AppLayout from "@/app/AppLayout";
 import { useAuth } from "@/features/auth/useAuth";
 import LoginPage from "@/features/auth/LoginDialog";
 import EditorPanel from "@/features/editor/components/EditorPanel";

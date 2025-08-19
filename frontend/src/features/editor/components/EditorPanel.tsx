@@ -31,7 +31,7 @@ export default function EditorPanel() {
                     {/* scrollable area */}
                     <div ref={scrollRef} className="flex-1 min-h-0 p-5 pb-20 overflow-auto">
                         <div className="flex overflow-visible">
-                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px] bg-almost-white shadow-[inset_0px_0px_6px_0px_rgba(0,0,0,0.1)]" autoHeightAndWdith={true}>
+                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px] bg-almost-white theme-shadow-inset" autoHeightAndWidth={true}>
                                 <MonacoEditor letter={letter} scrollContainerRef={scrollRef} />
                             </ThemeContainer>
                         </div>

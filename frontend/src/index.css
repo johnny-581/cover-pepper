@@ -4,9 +4,11 @@
 @theme {
     --color-theme-primary: #F5E1B8;
     --color-theme-secondary: #F7F3E8;
+    --color-theme-red: #D16969;
+    --color-theme-green: #6A9955;
     --color-almost-white: #FAFAF9;
     --color-almost-black: #404040;
-    --color-gray: #AFAFAF;
+    --color-gray: #9ca3af;
 
     --font-serif: "Merriweather", serif;
     --font-sans: "Work Sans", sans;
@@ -20,6 +22,14 @@
 .theme-border-right {
     border-right-width: 1px;
     border-color: var(--color-gray)
+}
+
+.theme-shadow {
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.theme-shadow-inset {
+    box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
 }
 
 @import "tailwindcss";

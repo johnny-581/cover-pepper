@@ -1,29 +1,33 @@
 import { Upload } from "lucide-react";
+import Button from "@/components/Button";
 import ButtonSquare from "@/components/ButtonSquare";
-import { useUI } from "@/features/letters/store";
+import { useUI } from "@/store";
 import { useAuth } from "@/features/auth/useAuth";
+import ConfirmDialog from "@/components/ConfirmDialog";
 
 export default function AccountMenu() {
-    const { user } = useAuth();
-    const { setSettingsOpen } = useUI();
+    const { logout } = useAuth();
+    const { setUploadOpen, isLogoutConfirmOpen, setLogoutConfirmOpen } = useUI();
 
     return (
-        <div className="p-2 items-center justify-between">
-            <div className="flex px-2 py-3 items-center rounded-2xl theme-border shadow-[0px_0px_6px_0px_rgba(0,0,0,0.1)]">
-                <div className="w-10 h-10 theme-border rounded-full">
-                    {/* <User size={16} /> */}
-                </div>
-
-                <div className="flex-1 px-2 truncate">
-                    {user?.name}
-                </div>
+        <div className="p-2">
+            <div className="flex p-3 items-center justify-between rounded-2xl theme-border theme-shadow">
+                <Button variant="ghost" onClick={() => setLogoutConfirmOpen(true)}>
+                    Logout
+                </Button>
 
                 <ButtonSquare
-                    onClick={() => setSettingsOpen(true)}
+                    onClick={() => setUploadOpen(true)}
                 >
                     <Upload size={20} color="var(--color-almost-black)" />
                 </ButtonSquare>
             </div>
+            <ConfirmDialog
+                open={isLogoutConfirmOpen}
+                message="Sure you want to logout?"
+                onConfirm={() => logout()}
+                onCancel={() => setLogoutConfirmOpen(false)}>
+            </ConfirmDialog>
         </div>
     )
 }

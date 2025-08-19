@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import type { Letter } from "@/features/letters/types";
 import ContextMenu from "@/components/ContextMenu";
 import { useDeleteMutation, useLetters } from "@/features/letters/hooks";
-import { useUI } from "@/features/letters/store";
+import { useUI } from "@/store";
 import clsx from "clsx";
 
 export default function LetterListItem({ letter }: { letter: Letter }) {
@@ -44,7 +44,7 @@ export default function LetterListItem({ letter }: { letter: Letter }) {
                 </div>
 
                 {templateLetterId === letter.id &&
-                    <div className="px-2 bg-theme-primary font-sans rounded-lg">
+                    <div className="px-2 bg-gray text-almost-white font-sans rounded-lg">
                         Template
                     </div>
                 }

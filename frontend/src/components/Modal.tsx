@@ -1,15 +1,17 @@
 import { type PropsWithChildren, useEffect } from "react";
 import { createPortal } from "react-dom";
-import clsx from "clsx";
+import ThemeContainer from "./ThemeContainer";
+import { X } from "lucide-react";
+import ButtonSquare from "./ButtonSquare";
 
 type Props = {
     open: boolean;
     onClose: () => void;
-    title?: string;
-    widthClass?: string;
+    title: string;
+    disableClose?: boolean;
 };
 
-export default function Modal({ open, onClose, title, widthClass, children }: PropsWithChildren<Props>) {
+export default function Modal({ open, onClose, title, disableClose = false, children }: PropsWithChildren<Props>) {
     useEffect(() => {
         function onKey(e: KeyboardEvent) {
             if (e.key === "Escape") onClose();
@@ -22,14 +24,18 @@ export default function Modal({ open, onClose, title, widthClass, children }: Pr
     const root = document.getElementById("portal-root")!;
 
     return createPortal(
-        <div className="fixed inset-0 bg-black/20 flex items-center justify-center" onClick={onClose}>
-            <div
-                className={clsx("bg-white border border-grayline p-4", widthClass ?? "w-[520px]")}
-                onClick={(e) => e.stopPropagation()}
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-xs flex items-center justify-center font-sans text-almost-black p-10">
+            <ThemeContainer
+                autoHeightAndWidth
+                className="bg-almost-white p-5 w-[550px] h-[600px] max-w-full max-h-full min-w-[200px] overflow-auto theme-shadow flex flex-col"
+            // onClick={(e) => e.stopPropagation()}
             >
-                {title && <div className="text-base font-medium mb-3">{title}</div>}
+                <div className="flex items-center justify-between mb-5">
+                    <div className="font-bold">{title}</div>
+                    {!disableClose && <ButtonSquare variant="ghost"><X onClick={onClose} /></ButtonSquare>}
+                </div>
                 {children}
-            </div>
+            </ThemeContainer>
         </div>,
         root
     );

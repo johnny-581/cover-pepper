@@ -11,12 +11,12 @@ export default function Button({
     ...rest
 }: Props) {
     const height = "h-9"
-    const base = "inline-flex items-center justify-center px-4 min-w-20 rounded-lg whitespace-nowrap transition shadow-[0px_0px_4px_0px_rgba(0,0,0,0.1)]"
+    const base = "inline-flex items-center justify-center px-4 min-w-20 rounded-lg whitespace-nowrap font-sans transition hover:cursor-pointer"
 
     const variants = {
-        primary: "bg-theme-primary hover:bg-[#EEDBB5]",
-        secondary: "bg-theme-secondary",
-        ghost: "bg-transparent hover:bg-[#f5f5f4]",
+        primary: "theme-shadow bg-theme-primary hover:bg-[#EEDBB5]",
+        secondary: "theme-shadow bg-theme-secondary",
+        ghost: "bg-transparent hover:bg-[#f5f5f4] hover:theme-shadow",
     }
 
     return (

@@ -69,8 +69,8 @@ export default function MonacoEditor({ letter, scrollContainerRef }: MonacoEdito
         scrollContainerRef,
         // optional tuning knobs:
         {
-            edgeBand: 64,
-            maxSpeedPxPerSec: 1400,
+            edgeBand: 72,
+            maxSpeedPxPerSec: 1500,
             minActivate: 0.06,
             easeExp: 2.2,
         }

@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import Modal from "@/components/Modal";
-import { useGenerateMutation, useLetter } from "@/features/letters/hooks";
-import { useNavigate, useParams } from "react-router-dom";
-import { useUI } from "@/features/letters/store";
+import { useGenerateMutation } from "@/features/letters/hooks";
+import { useNavigate } from "react-router-dom";
+import { useUI } from "@/store";
 import { getLetter } from "@/features/letters/api";
 import Button from "@/components/Button";
+import ThemeContainer from "@/components/ThemeContainer";
 
 type Props = { open: boolean; onClose: () => void };
 
 export default function GenerateDialog({ open, onClose }: Props) {
+    // open={isGenerateOpen} onClose={() => setGenerateOpen(false)}
     const [jobDescription, setJD] = useState("");
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const { templateLetterId } = useUI();
-    const gen = useGenerateMutation();
-    const { id } = useParams();
-    const { data: _current } = useLetter(id);
+    const generate = useGenerateMutation();
 
     useEffect(() => {
         if (!open) {
@@ -24,53 +24,52 @@ export default function GenerateDialog({ open, onClose }: Props) {
         }
     }, [open]);
 
-    const canGenerate = Boolean(templateLetterId);
-
     const handleSubmit = async () => {
-        if (!canGenerate) {
-            setError("Please set a template first (right-click a letter → Set as template).");
-            return;
-        }
         if (!jobDescription.trim()) {
-            setError("Job description is required.");
+            setError("Empty job description!");
             return;
         }
         setError(null);
 
-        const template = await getLetter(templateLetterId!);
-        const created = await gen.mutateAsync({
-            jobDescription,
-            templateLatex: template.contentLatex
-        });
-        onClose();
-        navigate(`/app/letters/${created.id}`);
+        // this dialog should only be openable when there is at least one letter
+        try {
+            const template = await getLetter(templateLetterId!);
+            const created = await generate.mutateAsync({
+                jobDescription,
+                templateLatex: template.contentLatex
+            });
+            onClose();
+            navigate(`/app/letters/${created.id}`);
+        } catch (error) {
+            console.error(`Errror generating letter from template: ${error}`);
+            setError("Error occured while generating!")
+        }
     };
 
     return (
         <Modal open={open} onClose={onClose} title="Generate from Template">
-            {!canGenerate && (
-                <div className="mb-3 text-xs text-gray-700">
-                    No template set. Right-click a letter in the list and choose “Set as template”.
-                </div>
-            )}
-            <label className="block text-sm mb-1">Job description</label>
-            <textarea
-                className="w-full border border-grayline p-2 h-40 text-sm"
-                value={jobDescription}
-                onChange={(e) => setJD(e.target.value)}
-                placeholder="Paste the job description here…"
-            />
-            {error && <div className="text-xs text-red-600 mt-2">{error}</div>}
+            <p className="mb-3">Make sure you include as much info about the position as possible - company, address, position, hiring manager... (⌘ + A)</p>
+            <ThemeContainer className="theme-shadow-inset">
+                <textarea
+                    className="h-full w-full p-5 font-serif outline-none resize-none"
+                    value={jobDescription}
+                    onChange={(e) => setJD(e.target.value)}
+                    placeholder="Paste the job description here"
+                />
+            </ThemeContainer>
 
-            <div className="mt-3 flex justify-end gap-2">
-                <Button onClick={onClose}>Cancel</Button>
-                <Button
-                    variant="solid"
-                    onClick={handleSubmit}
-                    disabled={!canGenerate || gen.isPending}
-                >
-                    {gen.isPending ? "Generating…" : "Generate"}
-                </Button>
+            <div className="flex items-center justify-between mt-5">
+                {error ? <div className="text-theme-red">{error}</div> : <div></div>}
+
+                <div className="flex items-center gap-2">
+                    <Button variant="ghost" onClick={onClose}>Cancel</Button>
+                    <Button
+                        onClick={handleSubmit}
+                        disabled={generate.isPending}
+                    >
+                        {generate.isPending ? "Generating…" : "Generate"}
+                    </Button>
+                </div>
             </div>
         </Modal>
     );

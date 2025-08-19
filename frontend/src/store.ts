@@ -10,8 +10,14 @@ type UIState = {
     isGenerateOpen: boolean;
     setGenerateOpen: (v: boolean) => void;
 
-    isSettingsOpen: boolean;
-    setSettingsOpen: (v: boolean) => void;
+    isUploadOpen: boolean;
+    setUploadOpen: (v: boolean) => void;
+
+    isLogoutConfirmOpen: boolean;
+    setLogoutConfirmOpen: (v: boolean) => void;
+
+    isDeleteConfirmOpen: boolean;
+    setDeleteConfirmOpen: (v: boolean) => void;
 };
 
 const LOCAL_KEY = "coverpepper_template_id";
@@ -29,6 +35,12 @@ export const useUI = create<UIState>((set) => ({
     isGenerateOpen: false,
     setGenerateOpen: (v) => set({ isGenerateOpen: v }),
 
-    isSettingsOpen: false,
-    setSettingsOpen: (v) => set({ isSettingsOpen: v })
+    isUploadOpen: false,
+    setUploadOpen: (v) => set({ isUploadOpen: v }),
+
+    isLogoutConfirmOpen: false,
+    setLogoutConfirmOpen: (v: boolean) => set({ isLogoutConfirmOpen: v }),
+
+    isDeleteConfirmOpen: false,
+    setDeleteConfirmOpen: (v: boolean) => (set({ isDeleteConfirmOpen: v })),
 }));

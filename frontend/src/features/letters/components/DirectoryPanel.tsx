@@ -1,6 +1,6 @@
 import { useLetters } from "@/features/letters/hooks";
 import LetterList from "@/features/letters/components/LetterList";
-import { useUI } from "@/features/letters/store";
+import { useUI } from "@/store";
 import Button from "@/components/Button";
 import AccountMenu from "./AccountMenu";
 
@@ -10,7 +10,7 @@ export default function DirectoryPanel() {
 
 
     return (
-        <aside className="w-[280px] theme-border-right bg-almost-white flex flex-col rounded-l-2xl shadow-[inset_0px_0px_6px_0px_rgba(0,0,0,0.1)]">
+        <aside className="w-[280px] theme-border-right bg-almost-white flex flex-col rounded-l-2xl theme-shadow-inset">
             <div className="p-5">
                 <Button className="w-full" onClick={() => setGenerateOpen(true)}>
                     New Letter

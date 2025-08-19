@@ -1,13 +1,13 @@
 import { Outlet } from "react-router-dom";
 import Header from "@/components/Header";
 import DirectoryPanel from "@/features/letters/components/DirectoryPanel";
-import { useUI } from "@/features/letters/store";
-import SettingsDialog from "@/features/settings/SettingsDialog";
+import { useUI } from "@/store";
+import UploadDialog from "@/features/upload/UploadDialog";
 import GenerateDialog from "@/features/letters/components/GenerateDialog";
 import ThemeContainer from "@/components/ThemeContainer";
 
 export default function AppLayout() {
-    const { isSettingsOpen, isGenerateOpen, setSettingsOpen, setGenerateOpen } = useUI();
+    const { isUploadOpen, isGenerateOpen, setUploadOpen, setGenerateOpen } = useUI();
 
     return (
         <div className="h-screen w-screen flex flex-col font-serif text-almost-black text-[16px] tracking-wide bg-theme-primary">
@@ -23,7 +23,7 @@ export default function AppLayout() {
                     </div>
                 </ThemeContainer>
             </div>
-            <SettingsDialog open={isSettingsOpen} onClose={() => setSettingsOpen(false)} />
+            <UploadDialog open={isUploadOpen} onClose={() => setUploadOpen(false)} />
             <GenerateDialog open={isGenerateOpen} onClose={() => setGenerateOpen(false)} />
         </div>
     );
