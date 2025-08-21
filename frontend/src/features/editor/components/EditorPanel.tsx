@@ -20,18 +20,18 @@ export default function EditorPanel() {
         }
     }, [id, letters, navigate])
 
-    if (!letter) return <div className="h-full w-full bg-theme-secondary flex items-center justify-center">Loading letter…</div>;
+    if (!letter) return <div className="h-full w-full bg-theme-secondary theme-shadow-inset"></div>;
 
     return (
         <>
             {id ? (
-                <div className="h-full w-full bg-theme-secondary flex flex-col">
+                <div className="h-full w-full bg-theme-secondary flex flex-col theme-shadow-inset">
                     <EditorToolbar letter={letter} />
 
                     {/* scrollable area */}
                     <div ref={scrollRef} className="flex-1 min-h-0 p-5 pb-20 overflow-auto">
                         <div className="flex overflow-visible">
-                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px] bg-almost-white theme-shadow-inset" autoHeightAndWidth={true}>
+                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px] bg-almost-white theme-shadow" autoHeightAndWidth={true}>
                                 <MonacoEditor letter={letter} scrollContainerRef={scrollRef} />
                             </ThemeContainer>
                         </div>

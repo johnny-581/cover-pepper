@@ -50,7 +50,7 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
     return (
         <div className="flex items-center justify-between px-5">
             <input
-                className="flex-1 pr-5 text-base text-[32px] outline-none bg-transparent"
+                className="flex-1 pr-5 theme-h1 outline-none bg-transparent"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
             />

@@ -6,15 +6,14 @@ import ButtonSquare from "./ButtonSquare";
 
 type Props = {
     open: boolean;
-    onClose: () => void;
+    onClose?: () => void;
     title: string;
-    disableClose?: boolean;
 };
 
-export default function Modal({ open, onClose, title, disableClose = false, children }: PropsWithChildren<Props>) {
+export default function Modal({ open, onClose, title, children }: PropsWithChildren<Props>) {
     useEffect(() => {
         function onKey(e: KeyboardEvent) {
-            if (e.key === "Escape") onClose();
+            if (onClose && e.key === "Escape") onClose();
         }
         if (open) window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
@@ -32,7 +31,7 @@ export default function Modal({ open, onClose, title, disableClose = false, chil
             >
                 <div className="flex items-center justify-between mb-5">
                     <div className="font-bold">{title}</div>
-                    {!disableClose && <ButtonSquare variant="ghost"><X onClick={onClose} /></ButtonSquare>}
+                    {onClose && <ButtonSquare variant="ghost"><X onClick={onClose} /></ButtonSquare>}
                 </div>
                 {children}
             </ThemeContainer>

@@ -41,7 +41,7 @@ export default function UploadDialog({ open, onClose }: Props) {
 
     return (
         <Modal open={open} onClose={onClose} title="Upload">
-            <p className="mb-3"> Up load a cover letter (must be in latex).</p>
+            <p className="mb-3">Upload your Cover letter in latex</p>
             <div className="flex items-center gap-2">
                 <input
                     ref={inputRef}
@@ -67,7 +67,7 @@ export default function UploadDialog({ open, onClose }: Props) {
                 )}
             </div>
 
-            <ThemeContainer className="theme-shadow-inset mt-3">
+            <ThemeContainer className="theme-shadow mt-3">
                 <textarea
                     className="h-full w-full p-5 font-serif outline-none resize-none"
                     value={content}

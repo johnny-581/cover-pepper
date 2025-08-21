@@ -16,7 +16,7 @@ export default function Button({
     const variants = {
         primary: "theme-shadow bg-theme-primary hover:bg-[#EEDBB5]",
         secondary: "theme-shadow bg-theme-secondary",
-        ghost: "bg-transparent hover:bg-[#f5f5f4] hover:theme-shadow",
+        ghost: "bg-transparent hover:bg-light-gray hover:theme-shadow",
     }
 
     return (

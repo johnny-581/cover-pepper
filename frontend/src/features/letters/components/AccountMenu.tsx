@@ -25,7 +25,10 @@ export default function AccountMenu() {
             <ConfirmDialog
                 open={isLogoutConfirmOpen}
                 message="Sure you want to logout?"
-                onConfirm={() => logout()}
+                onConfirm={() => {
+                    logout();
+                    setLogoutConfirmOpen(false);
+                }}
                 onCancel={() => setLogoutConfirmOpen(false)}>
             </ConfirmDialog>
         </div>

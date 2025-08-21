@@ -16,7 +16,7 @@ export default function ButtonSquare({
 
     const variants = {
         primary: "bg-theme-primary bg-theme-primary theme-shadow hover:bg-[#EEDBB5]",
-        ghost: "bg-transparent hover:bg-[#f5f5f4] hover:theme-shadow",
+        ghost: "bg-transparent hover:bg-light-gray hover:theme-shadow",
     }
 
 

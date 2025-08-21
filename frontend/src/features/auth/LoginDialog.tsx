@@ -1,26 +1,30 @@
 import { useState } from "react";
+import Modal from "@/components/Modal";
+import Button from "@/components/Button";
 
-export default function LoginPage() {
+type Props = {
+    open: boolean;
+    onClose?: () => void;
+}
+
+export default function LoginDialog({ open, onClose }: Props) {
     const [loading, setLoading] = useState(false);
 
-    const handleGoogle = () => {
+    const handleGoogleLogin = () => {
         setLoading(true);
         const base = import.meta.env.VITE_BACKEND_API_URL;
         window.location.href = `${base}/auth/google`;
     };
 
     return (
-        <div className="h-screen w-screen flex items-center justify-center">
-            <div className="border border-grayline p-8 w-[360px]">
-                <h1 className="text-lg font-medium mb-4">Welcome to Cover Pepper</h1>
-                <button
-                    onClick={handleGoogle}
-                    disabled={loading}
-                    className="w-full border border-black px-4 py-2 text-sm disabled:opacity-60"
-                >
-                    {loading ? "Redirecting…" : "Continue with Google"}
-                </button>
+        <Modal open={open} onClose={onClose} title="Login">
+            <div className="flex flex-col items-center">
+                <div className="w-30 h-30 theme-border rounded-full mt-15 mb-10"></div>
+                <p className="mb-3 theme-h1"> Welcome to Cover Pepper</p>
+                <p className="mb-15">Let’s cook up some cover letters</p>
+
+                <Button onClick={handleGoogleLogin}>{loading ? "Redirecting…" : "Continue with Google"}</Button>
             </div>
-        </div>
+        </Modal>
     );
 }

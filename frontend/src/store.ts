@@ -18,6 +18,9 @@ type UIState = {
 
     isDeleteConfirmOpen: boolean;
     setDeleteConfirmOpen: (v: boolean) => void;
+
+    isLoginOpen: boolean;
+    setLoginOpen: (v: boolean) => void;
 };
 
 const LOCAL_KEY = "coverpepper_template_id";
@@ -43,4 +46,7 @@ export const useUI = create<UIState>((set) => ({
 
     isDeleteConfirmOpen: false,
     setDeleteConfirmOpen: (v: boolean) => (set({ isDeleteConfirmOpen: v })),
+
+    isLoginOpen: false,
+    setLoginOpen: (v: boolean) => (set({ isLoginOpen: v })),
 }));

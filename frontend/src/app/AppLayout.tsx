@@ -4,10 +4,18 @@ import DirectoryPanel from "@/features/letters/components/DirectoryPanel";
 import { useUI } from "@/store";
 import UploadDialog from "@/features/upload/UploadDialog";
 import GenerateDialog from "@/features/letters/components/GenerateDialog";
+import LoginDialog from "@/features/auth/LoginDialog";
 import ThemeContainer from "@/components/ThemeContainer";
+import { useEffect } from "react";
+import { useAuth } from "@/features/auth/useAuth";
 
 export default function AppLayout() {
-    const { isUploadOpen, isGenerateOpen, setUploadOpen, setGenerateOpen } = useUI();
+    const { isUploadOpen, isGenerateOpen, isLoginOpen, setUploadOpen, setGenerateOpen, setLoginOpen } = useUI();
+    const { user, isLoading } = useAuth()
+
+    useEffect(() => {
+        if (!isLoading) setLoginOpen(!user);
+    }, [user, isLoading, setLoginOpen]);
 
     return (
         <div className="h-screen w-screen flex flex-col font-serif text-almost-black text-[16px] tracking-wide bg-theme-primary">
@@ -25,6 +33,7 @@ export default function AppLayout() {
             </div>
             <UploadDialog open={isUploadOpen} onClose={() => setUploadOpen(false)} />
             <GenerateDialog open={isGenerateOpen} onClose={() => setGenerateOpen(false)} />
+            <LoginDialog open={isLoginOpen} />
         </div>
     );
 }
