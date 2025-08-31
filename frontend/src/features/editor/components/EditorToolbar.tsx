@@ -19,7 +19,7 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
     const update = useUpdateMutation(letter.id);
     const compile = useCompileMutation();
     const savingRef = useRef<NodeJS.Timeout | null>(null);
-    const [saving, setSaving] = useState<"idle" | "saving" | "saved">("idle");
+    // const [saving, setSaving] = useState<"idle" | "saving" | "saved">("idle");
 
     useEffect(() => {
         setTitle(letter.title);
@@ -27,12 +27,12 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
 
     useEffect(() => {
         if (title === letter.title) return;
-        setSaving("saving");
+        // setSaving("saving");
         if (savingRef.current) clearTimeout(savingRef.current);
         savingRef.current = setTimeout(async () => {
             await update.mutateAsync({ title });
-            setSaving("saved");
-            setTimeout(() => setSaving("idle"), 800);
+            // setSaving("saved");
+            // setTimeout(() => setSaving("idle"), 800);
         }, 500);
     }, [title]);
 
@@ -40,8 +40,8 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
         if (savingRef.current) {
             clearTimeout(savingRef.current);
             await update.mutateAsync({ title });
-            setSaving("saved");
-            setTimeout(() => setSaving("idle"), 800);
+            // setSaving("saved");
+            // setTimeout(() => setSaving("idle"), 800);
         }
         const blob = await compile.mutateAsync(letter.id);
         downloadBlob(blob, letter.title);
