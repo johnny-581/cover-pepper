@@ -29,7 +29,7 @@ app.use(
         saveUninitialized: false,
         cookie: {
             httpOnly: true,
-            sameSite: "lax",
+            sameSite: "none",
             secure: ENV.NODE_ENV === "production",
             maxAge: 1000 * 60 * 60 * 24 * 7,
         },
@@ -39,7 +39,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get("/health", (req, res) => res.json({ ok: true }));
+app.get("/healthz", (req, res) => res.json({ ok: true }));
 app.use("/auth", authRoutes);
 app.use("/api/letters", letterRoutes);
 
