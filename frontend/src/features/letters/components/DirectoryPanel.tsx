@@ -2,7 +2,7 @@ import { useLetters } from "@/features/letters/hooks";
 import LetterList from "@/features/letters/components/LetterList";
 import { useUI } from "@/store";
 import Button from "@/components/Button";
-import AccountMenu from "./AccountMenu";
+import AccountMenu from "../../auth/AccountMenu";
 
 export default function DirectoryPanel() {
     const { data } = useLetters();
