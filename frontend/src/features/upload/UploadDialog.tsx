@@ -5,17 +5,22 @@ import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import ThemeContainer from "@/components/ThemeContainer";
 import { useHotkeys } from "react-hotkeys-hook";
+import { useLetters } from "@/features/letters/hooks";
+import { useUI } from "@/store";
 
 type Props = { open: boolean; onClose: () => void };
 
 export default function UploadDialog({ open, onClose }: Props) {
-    // Upload-only settings for now
     const [content, setContent] = useState("");
     const [error, setError] = useState<string | null>(null);
     const upload = useUploadMutation();
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [fileName, setFileName] = useState<string>("");
+    const { data } = useLetters();
+    const { setTemplateLetterId } = useUI();
+
+    const hadNoLetters = data?.length === 0;
 
     useEffect(() => {
         if (!open) {
@@ -41,6 +46,7 @@ export default function UploadDialog({ open, onClose }: Props) {
             return;
         }
         const created = await upload.mutateAsync(content);
+        if (hadNoLetters) setTemplateLetterId(created.id);
         onClose();
         navigate(`/app/letters/${created.id}`);
     };

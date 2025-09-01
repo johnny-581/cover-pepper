@@ -8,11 +8,10 @@ export default function DirectoryPanel() {
     const { data } = useLetters();
     const { setGenerateOpen } = useUI();
 
-
     return (
         <aside className="w-[280px] theme-border-right bg-almost-white flex flex-col rounded-l-2xl">
             <div className="p-5">
-                <Button className="w-full" onClick={() => setGenerateOpen(true)}>
+                <Button className="w-full" onClick={() => setGenerateOpen(true)} disabled={data?.length === 0}>
                     New Letter
                 </Button>
             </div>

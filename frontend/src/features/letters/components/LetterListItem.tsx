@@ -26,8 +26,9 @@ export default function LetterListItem({ letter }: { letter: Letter }) {
             await del.mutateAsync(letter.id);
             if (isSelected) {
                 const index = letters?.findIndex((l) => l.id === letter.id) ?? -1;
-
                 const next = letters?.[index + 1] || letters?.[index - 1];
+
+                if (next) setTemplateLetterId(next.id);
                 navigate(next ? `/app/letters/${next.id}` : `/app/letters`);
             }
             setDeleteConfirmOpen(false);

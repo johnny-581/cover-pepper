@@ -16,6 +16,7 @@ export default function GenerateDialog({ open, onClose }: Props) {
     const [error, setError] = useState<string | null>(null);
     const navigate = useNavigate();
     const { templateLetterId } = useUI();
+
     const generate = useGenerateMutation();
 
     useEffect(() => {
