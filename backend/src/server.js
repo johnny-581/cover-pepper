@@ -7,10 +7,13 @@ import { ENV } from './config/env.js';
 import authRoutes from "./routes/auth.js";
 import letterRoutes from "./routes/letters.js";
 import { errorHandler } from "./middleware/errorHandler.js";
+import { PrismaClient } from "@prisma/client";
+import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 
 const app = express();
+const prisma = new PrismaClient();
 
-app.use(morgan("dev")); // change to "combined" in production
+app.use(morgan(ENV.NODE_ENV === "production" ? "combined" : "dev")); // change to "combined" in production
 
 app.use(express.json({ limit: "2mb" }))
 app.use(
@@ -29,10 +32,14 @@ app.use(
         saveUninitialized: false,
         cookie: {
             httpOnly: true,
-            sameSite: "none",
-            secure: ENV.NODE_ENV === "production",
+            sameSite: ENV.NODE_ENV === "production" ? "none" : "lax",
+            secure: false,
             maxAge: 1000 * 60 * 60 * 24 * 7,
         },
+        store: new PrismaSessionStore(prisma, {
+            checkPeriod: 2 * 60 * 1000,
+            dbRecordIdIsSessionId: true,
+        }),
     })
 );
 

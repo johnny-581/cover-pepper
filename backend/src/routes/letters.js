@@ -11,6 +11,8 @@ router.use(requireAuth);
 // list cover letters for an authenticated user
 router.get("/", async (req, res, next) => {
     try {
+        // console.log('cookie header:', req.headers.cookie);
+        // console.log('user:', req.user);
         const userId = req.user.id;
         const letters = await prisma.coverLetter.findMany({
             where: { userId },
