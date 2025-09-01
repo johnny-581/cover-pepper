@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useUpdateMutation, useCompileMutation } from "@/features/letters/hooks";
 import { type Letter } from "@/features/letters/types";
 import Button from "@/components/Button";
+import { useHotkeys } from "react-hotkeys-hook";
 
 function downloadBlob(data: Blob, filename: string) {
     const url = URL.createObjectURL(data);
@@ -35,6 +36,8 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
             // setTimeout(() => setSaving("idle"), 800);
         }, 500);
     }, [title]);
+
+    useHotkeys("ctrl+enter", () => handleCompile(), []);
 
     const handleCompile = async () => {
         if (savingRef.current) {

@@ -5,6 +5,9 @@ import { useEffect, useRef } from "react";
 import { useLetter, useLetters } from "@/features/letters/hooks";
 import NoLetterSelected from "./NoLetterSelected";
 import ThemeContainer from "@/components/ThemeContainer";
+import Button from "@/components/Button";
+import { Upload } from "lucide-react";
+import { useUI } from "@/store";
 
 
 export default function EditorPanel() {
@@ -13,6 +16,7 @@ export default function EditorPanel() {
     const { data: letters } = useLetters();
     const { data: letter } = useLetter(id);
     const scrollRef = useRef<HTMLDivElement | null>(null);
+    const { setUploadOpen } = useUI();
 
     useEffect(() => {
         if (!id && letters && letters.length > 0) {
@@ -20,7 +24,17 @@ export default function EditorPanel() {
         }
     }, [id, letters, navigate])
 
-    if (!letter) return <div className="h-full w-full bg-theme-secondary theme-shadow-inset"></div>;
+    if (!letter) {
+        return (
+            <div className="h-full w-full bg-theme-secondary theme-shadow-inset flex flex-col items-center justify-center">
+                <p className="mb-5 text-gray">Your Plate is Empty</p>
+                <Button onClick={() => setUploadOpen(true)}>
+                    <Upload size={20} color="var(--color-almost-black)" className="mr-2" />
+                    Click Here to Upload
+                </Button>
+            </div>
+        );
+    }
 
     return (
         <>
