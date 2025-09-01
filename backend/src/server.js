@@ -33,7 +33,7 @@ app.use(
         cookie: {
             httpOnly: true,
             sameSite: ENV.NODE_ENV === "production" ? "none" : "lax",
-            secure: false,
+            secure: ENV.NODE_ENV === "production",
             maxAge: 1000 * 60 * 60 * 24 * 7,
         },
         store: new PrismaSessionStore(prisma, {
