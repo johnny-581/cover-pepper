@@ -22,9 +22,11 @@ export const defineCoverPepperTheme = (monaco: typeof monacoNS) => {
             "editor.focusedBorder": "#00000000",
             "editorWidget.border": "#00000000",
             "focusBorder": "#00000000",
+            "editorLineNumber.foreground": cssVar("--color-gray"),
+            "editorLineNumber.activeForeground": cssVar("--color-gray"),
             // visually hide line numbers
-            "editorLineNumber.foreground": "#00000000",
-            "editorLineNumber.activeForeground": "#00000000",
+            // "editorLineNumber.foreground": "#00000000",
+            // "editorLineNumber.activeForeground": "#00000000",
         },
     });
 
