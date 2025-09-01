@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
-import { useEffect } from "react";
 import ThemeContainer from "./ThemeContainer";
 import Button from "./Button";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type Props = {
     open: boolean;
@@ -11,13 +11,15 @@ type Props = {
 };
 
 export default function ConfirmDialog({ open, message, onConfirm, onCancel }: Props) {
-    useEffect(() => {
-        function onKey(e: KeyboardEvent) {
-            if (e.key === "Escape") onCancel();
-        }
-        if (open) window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
+    useHotkeys("esc", (e) => {
+        e.preventDefault();
+        if (open) onCancel();
     }, [open, onCancel]);
+
+    useHotkeys("enter", (e) => {
+        e.preventDefault();
+        if (open) onConfirm();
+    }, [open, onConfirm])
 
     if (!open) return null;
     const root = document.getElementById("portal-root")!;

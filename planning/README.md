@@ -36,6 +36,8 @@ UI:
   - A finish button on top right to compile and download
   - the latex body below (with out border)
 
+Noto Sans
+
 Help me plan for the frontend implementation. Do not provide code yet. Include a general structure. Feel free to suggest other appropriate tools. I already have a simple backend with the following endpoints:
 
 ```

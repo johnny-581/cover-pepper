@@ -4,6 +4,7 @@ import { useUploadMutation } from "@/features/letters/hooks";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button";
 import ThemeContainer from "@/components/ThemeContainer";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type Props = { open: boolean; onClose: () => void };
 
@@ -23,6 +24,11 @@ export default function UploadDialog({ open, onClose }: Props) {
             setError(null);
         }
     }, [open]);
+
+    useHotkeys("enter", (e) => {
+        e.preventDefault();
+        if (open) handleSubmit();
+    })
 
     const onFile = async (f: File) => {
         const text = await f.text();

@@ -1,8 +1,9 @@
-import { type PropsWithChildren, useEffect } from "react";
+import { type PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
 import ThemeContainer from "./ThemeContainer";
 import { X } from "lucide-react";
 import ButtonSquare from "./ButtonSquare";
+import { useHotkeys } from "react-hotkeys-hook";
 
 type Props = {
     open: boolean;
@@ -11,13 +12,10 @@ type Props = {
 };
 
 export default function Modal({ open, onClose, title, children }: PropsWithChildren<Props>) {
-    useEffect(() => {
-        function onKey(e: KeyboardEvent) {
-            if (onClose && e.key === "Escape") onClose();
-        }
-        if (open) window.addEventListener("keydown", onKey);
-        return () => window.removeEventListener("keydown", onKey);
-    }, [open, onClose]);
+    useHotkeys("esc", (e) => {
+        e.preventDefault();
+        if (open && onClose) onClose();
+    })
 
     if (!open) return null;
     const root = document.getElementById("portal-root")!;

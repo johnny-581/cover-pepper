@@ -63,7 +63,7 @@ export default function LetterListItem({ letter }: { letter: Letter }) {
                 }
             </li>
             <ConfirmDialog
-                open={isDeleteConfirmOpen}
+                open={isDeleteConfirmOpen && isSelected}
                 message="Sure you want to delete this cover letter?"
                 onConfirm={handleDelete}
                 onCancel={() => setDeleteConfirmOpen(false)}>
