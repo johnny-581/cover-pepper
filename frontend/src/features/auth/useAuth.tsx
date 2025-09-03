@@ -8,7 +8,7 @@ export function useAuth() {
     const query = useQuery({
         queryKey: ["auth", "me"],
         queryFn: async (): Promise<MeResponse["user"]> => {
-            const res = await axios.get<MeResponse>("/auth/me");
+            const res = await axios.get<MeResponse>("/auth/me", { withCredentials: true }); // ensures the client sends cookie with the request
             return res.data.user;
         }
     });
@@ -18,7 +18,7 @@ export function useAuth() {
 
     const logout = useMutation({
         mutationFn: async () => {
-            await axios.post("/auth/logout");
+            await axios.post("/auth/logout", null, { withCredentials: true });
         },
         onSuccess: () => {
             qc.clear();

@@ -28,6 +28,8 @@ router.post("/logout", (req, res, next) => {
 });
 
 router.get("/me", (req, res) => {
+    res.set('Cache-Control', 'no-store');
+    res.set('Vary', 'Cookie');
     res.json({ user: req.user || null });
 });
 
