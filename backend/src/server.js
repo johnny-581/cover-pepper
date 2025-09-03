@@ -34,6 +34,7 @@ app.use(
             httpOnly: true,
             sameSite: ENV.NODE_ENV === "production" ? "none" : "lax",
             secure: ENV.NODE_ENV === "production",
+            partitioned: true,
             maxAge: 1000 * 60 * 60 * 24 * 7,
         },
         store: new PrismaSessionStore(prisma, {
