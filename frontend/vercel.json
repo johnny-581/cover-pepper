@@ -11,6 +11,10 @@
         {
             "source": "/((?!assets|favicon.ico|robots.txt|manifest.webmanifest).*)",
             "destination": "/"
+        },
+        {
+            "source": "/auth/:path*",
+            "destination": "https://cover-pepper-production.up.railway.app/auth/:path*"
         }
     ]
 }
