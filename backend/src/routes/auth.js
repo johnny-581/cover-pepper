@@ -11,7 +11,7 @@ router.get(
     passport.authenticate("google", { failureRedirect: "/api/auth/failure" }),
     (req, res) => {
         // on success
-        res.redirect(process.env.CLIENT_ORIGIN);
+        res.redirect("/"); // redirect back to frontend
     }
 );
 
