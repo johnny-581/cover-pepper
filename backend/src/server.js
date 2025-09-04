@@ -56,20 +56,3 @@ app.use(errorHandler);
 app.listen(ENV.PORT, () => {
     console.log(`Server listening on http://localhost:${ENV.PORT}`);
 });
-
-
-
-// import express from "express";
-// import cors from "cors";
-// import { ENV } from './config/env.js';
-
-// const app = express();
-// app.set("trust proxy", 1);
-// app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
-
-// app.get("/healthz", (_req, res) => res.status(200).send("ok"));
-
-// const port = ENV.PORT;
-// app.listen(port, () => {
-//     console.log("listening on", port);
-// });
