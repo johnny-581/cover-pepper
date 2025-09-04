@@ -32,9 +32,9 @@ app.use(
         saveUninitialized: false,
         cookie: {
             httpOnly: true,
-            sameSite: ENV.NODE_ENV === "production" ? "none" : "lax",
+            // sameSite: ENV.NODE_ENV === "production" ? "none" : "lax",
+            sameSite: "lax",
             secure: ENV.NODE_ENV === "production",
-            partitioned: true,
             maxAge: 1000 * 60 * 60 * 24 * 7,
         },
         store: new PrismaSessionStore(prisma, {
@@ -48,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/healthz", (req, res) => res.json({ ok: true }));
-app.use("/auth", authRoutes);
+app.use("/api/auth", authRoutes);
 app.use("/api/letters", letterRoutes);
 
 app.use(errorHandler);

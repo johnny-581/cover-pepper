@@ -8,7 +8,7 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 
 router.get(
     "/google/callback",
-    passport.authenticate("google", { failureRedirect: "/auth/failure" }),
+    passport.authenticate("google", { failureRedirect: "/api/auth/failure" }),
     (req, res) => {
         // on success
         res.redirect(process.env.CLIENT_ORIGIN);
