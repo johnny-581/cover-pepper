@@ -26,9 +26,11 @@ export async function deleteLetter(id: string): Promise<void> {
 }
 
 export async function generateLetter(jobDescription: string, templateLatex: string): Promise<Letter> {
+    const currDate = new Date().toDateString();
     const { data } = await axios.post("/api/letters/generate", {
         jobDescription,
-        templateLatex
+        templateLatex,
+        currDate,
     });
     return data;
 }

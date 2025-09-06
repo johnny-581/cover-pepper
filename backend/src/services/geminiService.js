@@ -3,7 +3,7 @@ import { ENV } from '../config/env.js';
 
 const ai = new GoogleGenAI({ apiKey: ENV.GEMINI_API_KEY });
 
-export async function generateCoverLetterLatex(jobDestription, templateLatex) {
+export async function generateCoverLetterLatex(jobDestription, templateLatex, currDate) {
     try {
         const prompt = `
 You are given a job description in plain text and a cover letter in latex. Update this old cover letter based on the job description.
@@ -13,7 +13,7 @@ Update only the following fields (if relavent to the old template):
 - Company address
 - Position title
 - Name of hiring manager (use "Hiring Manager" can't be found in the job description with confidence)
-- Date (change to current date: ${new Date().toDateString()}. Note the format of the old date, the new date should be in the same format)
+- Date (change to current date: ${currDate}. Note the format of the old date, the new date should be in the same format)
 
 Make sure to replace every relavent occurence of these fields, including in the letter body.
 Otherwise, do not change the old cover letter in any way, even if it doesn't fully suit the new job yet. Return only latex.

@@ -110,12 +110,12 @@ router.post("/generate", async (req, res, next) => {
     try {
         // console.log(`Request to backend:\n ${JSON.stringify(req.body)}`);
         const userId = req.user.id;
-        const { jobDescription, templateLatex } = req.body;
+        const { jobDescription, templateLatex, currDate } = req.body;
 
         if (!jobDescription || !templateLatex)
             return res.status(400).json({ error: "Missing jobDescription or template!" });
 
-        const generatedLatex = await generateCoverLetterLatex(jobDescription, templateLatex);
+        const generatedLatex = await generateCoverLetterLatex(jobDescription, templateLatex, currDate);
         const generatedMeta = await generateCoverLetterMeta(generatedLatex);
         const { title, company, position, date } = generatedMeta;
 
