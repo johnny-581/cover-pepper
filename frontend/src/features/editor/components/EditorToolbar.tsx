@@ -3,6 +3,7 @@ import { useUpdateMutation, useCompileMutation } from "@/features/letters/hooks"
 import { type Letter } from "@/features/letters/types";
 import Button from "@/components/Button";
 import { useHotkeys } from "react-hotkeys-hook";
+import { CircleCheck } from "lucide-react";
 
 function downloadBlob(data: Blob, filename: string) {
     const url = URL.createObjectURL(data);
@@ -62,8 +63,8 @@ export default function LetterToolbar({ letter }: { letter: Letter }) {
                     {saving === "saving" && "Saving…"}
                     {saving === "saved" && "Saved"}
                 </div> */}
-                <Button onClick={handleCompile} disabled={compile.isPending}>
-                    {compile.isPending ? "Compiling…" : "Finish (PDF)"}
+                <Button icon={compile.isPending ? null : <CircleCheck color="var(--color-theme-black)" />} onClick={handleCompile} disabled={compile.isPending}>
+                    {compile.isPending ? "Compiling…" : "Download PDF"}
                 </Button>
             </div>
         </div>

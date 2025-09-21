@@ -3,7 +3,7 @@ import MonacoEditor from "@/features/editor/components/MonacoEditor";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import { useLetter, useLetters } from "@/features/letters/hooks";
-import NoLetterSelected from "./NoLetterSelected";
+import NoLetterSelected from "../features/editor/components/NoLetterSelected";
 import ThemeContainer from "@/components/ThemeContainer";
 import Button from "@/components/Button";
 import { Upload } from "lucide-react";
@@ -26,11 +26,11 @@ export default function EditorPanel() {
 
     if (!letter) {
         return (
-            <div className="h-full w-full bg-theme-secondary theme-shadow-inset flex flex-col items-center justify-center">
-                <p className="mb-5 text-gray">Your Plate is Empty</p>
+            <div className="h-full w-full bg-theme-white flex flex-col items-center justify-center">
+                <p className="mb-5 text-theme-dark-gray">Your Plate is Empty</p>
                 <Button onClick={() => setUploadOpen(true)}>
-                    <Upload size={20} color="var(--color-almost-black)" className="mr-2" />
-                    Click Here to Upload
+                    <Upload color="var(--color-theme-black)" className="mr-2" />
+                    Upload a .tex File
                 </Button>
             </div>
         );
@@ -39,13 +39,13 @@ export default function EditorPanel() {
     return (
         <>
             {id ? (
-                <div className="h-full w-full bg-theme-secondary flex flex-col theme-shadow-inset">
+                <div className="h-full w-full bg-theme-white flex flex-col">
                     <EditorToolbar letter={letter} />
 
                     {/* scrollable area */}
                     <div ref={scrollRef} className="flex-1 min-h-0 p-5 pb-20 overflow-auto">
                         <div className="flex overflow-visible">
-                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px] bg-almost-white theme-shadow" autoHeightAndWidth={true}>
+                            <ThemeContainer className="min-h-3/4 flex-grow min-w-[400px] max-w-[800px]" autoHeightAndWidth={true}>
                                 <MonacoEditor letter={letter} scrollContainerRef={scrollRef} />
                             </ThemeContainer>
                         </div>

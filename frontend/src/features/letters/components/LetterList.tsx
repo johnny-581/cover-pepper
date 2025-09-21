@@ -5,15 +5,15 @@ export default function LetterList({ letters }: { letters: Letter[] }) {
     if (!letters?.length) {
         // empty pantry
         return (
-            <div className="h-full flex items-center justify-center text-gray">
+            <div className="h-full flex items-center justify-center text-theme-dark-gray">
                 Your Pantry is Empty
             </div>
         );
     }
 
     return (
-        <>
-            <ul className="px-2">
+        <div className="p-2">
+            <ul>
                 {letters.map((l) => (
                     <LetterListItem key={l.id} letter={l} />
                 ))}
@@ -22,6 +22,6 @@ export default function LetterList({ letters }: { letters: Letter[] }) {
                 <p className="pb-2">⌘ + backspace to delete</p>
                 <p>double click to set as template</p>
             </div>
-        </>
+        </div>
     );
 }

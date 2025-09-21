@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Modal from "@/components/Modal";
 import Button from "@/components/Button";
+import logo from "@/assets/logo.png";
 
 type Props = {
     open: boolean;
@@ -19,7 +20,8 @@ export default function LoginDialog({ open, onClose }: Props) {
     return (
         <Modal open={open} onClose={onClose} title="Login">
             <div className="flex flex-col items-center">
-                <div className="w-30 h-30 theme-border rounded-full mt-15 mb-10"></div>
+                {/* <div className="w-30 h-30 theme-border rounded-full mt-15 mb-10"></div> */}
+                <img src={logo} alt="logo" className="h-30 p-1 pl-2 mt-15 mb-10" />
                 <p className="mb-3 theme-h1 text-center"> Welcome to Cover Pepper</p>
                 <p className="mb-15 text-center">Let’s cook up some cover letters</p>
 

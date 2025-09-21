@@ -56,7 +56,7 @@ export default function GenerateDialog({ open, onClose }: Props) {
     return (
         <Modal open={open} onClose={onClose} title="Generate from Template">
             <p className="mb-3">Make sure you include as much info about the position as possible - company, address, position, hiring manager... (⌘ + A)</p>
-            <ThemeContainer className="theme-shadow">
+            <ThemeContainer className="">
                 <textarea
                     className="h-full w-full p-5 font-serif outline-none resize-none"
                     value={jobDescription}

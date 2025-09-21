@@ -79,7 +79,7 @@ export default function UploadDialog({ open, onClose }: Props) {
                 )}
             </div>
 
-            <ThemeContainer className="theme-shadow mt-3">
+            <ThemeContainer className="mt-3">
                 <textarea
                     className="h-full w-full p-5 font-serif outline-none resize-none"
                     value={content}

@@ -47,8 +47,8 @@ export default function LetterListItem({ letter }: { letter: Letter }) {
         <>
             <li
                 className={clsx(
-                    "px-3 py-[10px] cursor-pointer flex items-center justify-between rounded-lg hover:bg-light-gray select-none",
-                    isSelected && "bg-theme-secondary"
+                    "px-3 h-10 cursor-pointer flex items-center justify-between rounded-lg hover:bg-theme-hover-gray select-none",
+                    isSelected && "bg-theme-medium-gray"
                 )}
                 onClick={() => navigate(`/app/letters/${letter.id}`)}
                 onDoubleClick={() => setTemplateLetterId(letter.id)}
@@ -58,7 +58,7 @@ export default function LetterListItem({ letter }: { letter: Letter }) {
                 </div>
 
                 {templateLetterId === letter.id &&
-                    <div className="px-2 bg-gray text-almost-white font-sans rounded-lg">
+                    <div className="px-2 py-[2px] bg-theme-primary text-theme-dark-gray rounded-lg">
                         Template
                     </div>
                 }
