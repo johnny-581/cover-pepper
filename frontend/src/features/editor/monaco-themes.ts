@@ -17,8 +17,8 @@ export const defineCoverPepperTheme = (monaco: typeof monacoNS) => {
         colors: {
             "editor.background": "#00000000",
             "editorGutter.background": "#00000000",
-            "editorCursor.foreground": cssVar("--color-almost-black") || "#222222",
-            "editor.selectionBackground": cssVar("--color-theme-secondary") || "#CCE5FF55",
+            "editorCursor.foreground": cssVar("--color-theme-black") || "#222222",
+            "editor.selectionBackground": cssVar("--color-theme-primary") || "#CCE5FF55",
             "editor.focusedBorder": "#00000000",
             "editorWidget.border": "#00000000",
             "focusBorder": "#00000000",
