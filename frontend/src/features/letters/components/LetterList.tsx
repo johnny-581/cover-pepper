@@ -11,9 +11,6 @@ export default function LetterList({ letters }: { letters: Letter[] }) {
         );
     }
 
-    console.log(letters);
-    console.log(typeof letters);
-
     return (
         <>
             <ul className="px-2">
