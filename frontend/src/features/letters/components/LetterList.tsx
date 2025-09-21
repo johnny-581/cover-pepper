@@ -18,7 +18,7 @@ export default function LetterList({ letters }: { letters: Letter[] }) {
                     <LetterListItem key={l.id} letter={l} />
                 ))}
             </ul>
-            <div className="px-5 py-[10px] text-gray font-sans leading-tight select-none">
+            <div className="px-3 py-[10px] text-theme-dark-gray leading-tight select-none">
                 <p className="pb-2">⌘ + backspace to delete</p>
                 <p>double click to set as template</p>
             </div>
