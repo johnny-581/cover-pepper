@@ -7,11 +7,10 @@ import { ENV } from './config/env.js';
 import authRoutes from "./routes/auth.js";
 import letterRoutes from "./routes/letters.js";
 import { errorHandler } from "./middleware/errorHandler.js";
-import { PrismaClient } from "@prisma/client";
+import prisma from './config/prisma.js';
 import { PrismaSessionStore } from "@quixo3/prisma-session-store";
 
 const app = express();
-const prisma = new PrismaClient();
 
 app.use(morgan(ENV.NODE_ENV === "production" ? "combined" : "dev")); // change to "combined" in production
 
@@ -38,7 +37,7 @@ app.use(
             maxAge: 1000 * 60 * 60 * 24 * 7,
         },
         store: new PrismaSessionStore(prisma, {
-            checkPeriod: 2 * 60 * 1000,
+            // checkPeriod: 2 * 60 * 1000,
             dbRecordIdIsSessionId: true,
         }),
     })
