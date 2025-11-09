@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Modal from "@/components/Modal";
 import { useGenerateMutation } from "@/features/letters/hooks";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { useUI } from "@/store";
 import { getLetter } from "@/features/letters/api";
 import Button from "@/components/Button";
@@ -14,7 +14,7 @@ export default function GenerateDialog({ open, onClose }: Props) {
     // open={isGenerateOpen} onClose={() => setGenerateOpen(false)}
     const [jobDescription, setJD] = useState("");
     const [error, setError] = useState<string | null>(null);
-    const navigate = useNavigate();
+    const router = useRouter();
     const { templateLetterId } = useUI();
 
     const generate = useGenerateMutation();
@@ -25,11 +25,6 @@ export default function GenerateDialog({ open, onClose }: Props) {
             setError(null);
         }
     }, [open]);
-
-    useHotkeys("enter", (e) => {
-        e.preventDefault();
-        if (open) handleSubmit();
-    })
 
     const handleSubmit = async () => {
         if (!jobDescription.trim()) {
@@ -46,12 +41,17 @@ export default function GenerateDialog({ open, onClose }: Props) {
                 templateLatex: template.contentLatex
             });
             onClose();
-            navigate(`/app/letters/${created.id}`);
+            router.replace(`/letters/${created.id}`);
         } catch (error) {
             console.error(`Errror generating letter from template: ${error}`);
             setError("Error occured while generating!")
         }
     };
+
+    useHotkeys("enter", (e) => {
+      e.preventDefault();
+      if (open) handleSubmit();
+    });
 
     return (
         <Modal open={open} onClose={onClose} title="Generate from Template">

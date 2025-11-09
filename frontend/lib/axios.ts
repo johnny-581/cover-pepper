@@ -1,0 +1,11 @@
+import Axios from "axios";
+
+const axios = Axios.create({
+  baseURL:
+    process.env.NEXT_PUBLIC_PRODUCTION === "true"
+      ? "/"
+      : process.env.NEXT_PUBLIC_BACKEND_API_URL,
+  withCredentials: true,
+});
+
+export default axios;
