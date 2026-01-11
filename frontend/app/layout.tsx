@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Merriweather, Noto_Sans } from "next/font/google";
 import "./globals.css";
-import Providers from "@/app/Providers";
+// import Providers from "@/app/Providers";
 // import Dialogs from "../components/dialogs/DialogHost";
 
 const merriweather = Merriweather({
@@ -29,10 +29,10 @@ export default function RootLayout({
       <body
         className={`${merriweather.variable} ${notoSans.variable} antialiased`}
       >
-        <Providers>
-          {children}
-          {/* <Dialogs /> */}
-        </Providers>
+        {/* <Providers> */}
+        {children}
+        {/* <Dialogs /> */}
+        {/* </Providers> */}
       </body>
     </html>
   );

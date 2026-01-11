@@ -1,17 +1,17 @@
 "use client";
 
-import { useLetters } from "@/cover-pepper/features/letters/hooks";
-import LetterList from "@/cover-pepper/features/letters/components/LetterList";
-import { useUI } from "@/components/dialogs/store";
-import { Button } from "@/components/ui/button";
-import AccountMenu from "../features/settings/AccountMenu";
+// import { useLetters } from "@/cover-pepper/features/letters/hooks";
+// import LetterList from "@/cover-pepper/features/letters/components/LetterList";
+// import { useUI } from "@/components/dialogs/store";
+// import { Button } from "@/components/ui/button";
+// import AccountMenu from "../features/settings/AccountMenu";
 import logo from "@/public/logo.png";
-import { SquarePen, Upload } from "lucide-react";
+// import { SquarePen, Upload } from "lucide-react";
 import Image from "next/image";
 
 export default function Sidebar() {
-  const { data: letters } = useLetters();
-  const { setGenerateOpen, setUploadOpen } = useUI();
+  // const { data: letters } = useLetters();
+  // const { setGenerateOpen, setUploadOpen } = useUI();
 
   return (
     <aside className="min-w-[300px] w-[300px] theme-border-right bg-theme-light-gray flex flex-col">
@@ -26,7 +26,7 @@ export default function Sidebar() {
         <div className="font-bold pl-2">Cover Pepper</div>
       </div>
 
-      <div className="p-2">
+      {/* <div className="p-2">
         <Button
           variant="ghost"
           className="w-full justify-start"
@@ -50,7 +50,7 @@ export default function Sidebar() {
         <LetterList letters={letters ?? []} />
       </div>
 
-      <AccountMenu />
+      <AccountMenu /> */}
     </aside>
   );
 }
